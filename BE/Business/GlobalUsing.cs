@@ -4,7 +4,6 @@ global using Serilog;
 global using AutoMapper;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
-global using Swashbuckle.AspNetCore.Annotations;
 global using System.Security.Claims;
 global using Model = Business.Domain.Models;
 global using MyEnum = Business.Resources.Enums;
