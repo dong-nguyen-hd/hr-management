@@ -1,7 +1,7 @@
-﻿using Business.Domain.Models;
-using Business.Extensions;
-using Business.Resources.DTOs.Authentication;
-using Business.Resources.Enums;
+﻿using API.Domain.Models;
+using API.Extensions;
+using API.Resources.DTOs.Authentication;
+using API.Resources.Enums;
 using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using UnitTest.Tool;

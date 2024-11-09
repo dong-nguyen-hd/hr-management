@@ -1,8 +1,8 @@
-using Business.Domain.Services;
-using Business.Extensions;
+using API.Domain.Services;
+using API.Extensions;
+using API.Resources.Enums;
+using API.Resources.SystemData;
 using Business.Extensions.AddConfig;
-using Business.Resources.Enums;
-using Business.Resources.SystemData;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace API.Controllers.Middlewares;

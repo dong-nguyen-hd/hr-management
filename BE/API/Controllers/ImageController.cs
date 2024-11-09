@@ -1,10 +1,10 @@
-﻿using Business.Domain.Services;
+﻿using API.Domain.Services;
+using API.Resources.DTOs.Information;
+using API.Resources.Enums;
+using API.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Business.Resources.DTOs.Information;
-using Business.Resources.Enums;
-using Business.Results;
 
 namespace API.Controllers;
 

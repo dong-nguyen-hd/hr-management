@@ -1,9 +1,9 @@
 using System.Net;
-using Business.Extensions;
+using API.Extensions;
+using API.Resources.Exceptions;
+using API.Resources.SystemData;
+using API.Results;
 using Business.Extensions.AddConfig;
-using Business.Resources.Exceptions;
-using Business.Resources.SystemData;
-using Business.Results;
 using FluentValidation;
 
 namespace API.Controllers.Middlewares;

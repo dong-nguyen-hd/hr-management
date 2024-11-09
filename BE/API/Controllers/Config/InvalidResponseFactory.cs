@@ -1,5 +1,5 @@
-﻿using Business.Resources.SystemData;
-using Business.Results;
+﻿using API.Resources.SystemData;
+using API.Results;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Controllers.Config;

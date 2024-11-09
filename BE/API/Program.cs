@@ -1,12 +1,12 @@
 using System.Text;
 using API.Controllers.Config;
 using API.Controllers.Middlewares;
+using API.Domain.Contexts;
 using API.Extensions;
 using API.Extensions.AddConfig;
 using API.Extensions.JsonConverter;
+using API.Resources.SystemData;
 using Business.Extensions.AddConfig;
-using Business.Resources.SystemData;
-using Infrastructure.Contexts;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;

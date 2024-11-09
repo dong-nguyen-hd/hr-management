@@ -1,10 +1,9 @@
 using System.Reflection;
 using System.Collections;
 using API.Controllers.Middlewares;
-using Business.Domain.Services;
-using Business.Extensions;
-using Business.Resources.Attributes;
-using Business.Resources.SystemData;
+using API.Domain.Services;
+using API.Resources.Attributes;
+using API.Resources.SystemData;
 using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Filters;
@@ -20,8 +19,6 @@ public static class RelateLogConfig
 
     public static void AddLog(this IServiceCollection services, IConfiguration configuration)
     {
-        #region Config log-type
-
         var logCfg = new LoggerConfiguration();
 
         logCfg
@@ -70,8 +67,6 @@ public static class RelateLogConfig
         }
 
         Log.Logger = logCfg.CreateLogger();
-
-        #endregion
     }
 
     #region My Redaction

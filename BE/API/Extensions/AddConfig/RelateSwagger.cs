@@ -1,5 +1,5 @@
 using System.Reflection;
-using Business.Resources.SystemData;
+using API.Resources.SystemData;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;

@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using Business.Domain.Models;
-using Business.Domain.Services;
-using Business.Resources;
-using Business.Resources.DTOs.Person;
-using Business.Resources.Enums;
-using Business.Results;
+﻿using API.Domain.Models;
+using API.Domain.Services;
+using API.Resources;
+using API.Resources.DTOs.Person;
+using API.Resources.Enums;
+using API.Results;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

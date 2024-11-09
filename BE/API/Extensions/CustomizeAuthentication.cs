@@ -1,13 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Business.Resources.DTOs.Information;
+using API.Resources.DTOs.Information;
 
 namespace API.Extensions;
 
 public static class CustomizeAuthentication
 {
-    #region Method
+    public static (string? id, string? token) ComputeRefreshTokenId(this string? refreshToken)
+    {
+        if (string.IsNullOrEmpty(refreshToken))
+            return (null, null);
+
+        var tokenSplit = refreshToken.Split('_', StringSplitOptions.RemoveEmptyEntries);
+        if (tokenSplit.Length != 2)
+            return (null, null);
+
+        return (tokenSplit[0], tokenSplit[1]);
+    }
 
     public static void AddJwtBearerAuthentication(this IServiceCollection services)
     {
@@ -32,6 +42,4 @@ public static class CustomizeAuthentication
             };
         });
     }
-
-    #endregion
 }

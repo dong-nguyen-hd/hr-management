@@ -1,10 +1,10 @@
 using API.Controllers.Config.Permission.Handler;
 using API.Controllers.Config.Permission.Requirement;
 using API.Controllers.Filters;
-using Business.Domain.Services;
-using Business.Mapping.Account;
-using Business.Resources.SystemData;
-using Business.Services;
+using API.Domain.Services;
+using API.Mapping.Account;
+using API.Resources.SystemData;
+using API.Services;
 
 namespace API.Extensions.AddConfig;
 

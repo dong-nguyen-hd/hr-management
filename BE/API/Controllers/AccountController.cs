@@ -1,17 +1,17 @@
 using AutoMapper;
-using Business.Domain.Models;
 using Business.Domain.Repositories;
-using Business.Domain.Services;
-using Business.Extensions;
-using Business.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Serilog;
 using System.Security.Claims;
-using Business.Resources.DTOs.Account;
-using Business.Resources.Enums;
-using Business.Results;
+using API.Domain.Models;
+using API.Domain.Services;
+using API.Extensions;
+using API.Resources;
+using API.Resources.DTOs.Account;
+using API.Resources.Enums;
+using API.Results;
 
 namespace API.Controllers;
 

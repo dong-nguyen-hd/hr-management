@@ -1,7 +1,6 @@
-﻿using Business.Domain.Services;
-using Business.Resources;
-using Business.Resources.DTOs.Authentication;
-using Business.Results;
+﻿using API.Domain.Services;
+using API.Resources.DTOs.Authentication;
+using API.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

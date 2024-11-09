@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Business.Domain.Services;
-using Business.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
