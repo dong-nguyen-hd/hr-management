@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Contexts.Config
+namespace Infrastructure.Contexts.Config;
+
+/// <summary>
+/// Setting schema for Person table
+/// </summary>
+public class PersonConfig : IEntityTypeConfiguration<Person>
 {
-    /// <summary>
-    /// Setting schema for Person table
-    /// </summary>
-    public class PersonConfig : IEntityTypeConfiguration<Person>
+    public void Configure(EntityTypeBuilder<Person> entity)
     {
-        public void Configure(EntityTypeBuilder<Person> entity)
-        {
             entity.ToTable("Person");
             entity.Property(x => x.FirstName).IsRequired().HasColumnType("nvarchar(500)");
             entity.Property(x => x.LastName).IsRequired().HasColumnType("nvarchar(500)");
@@ -27,5 +27,4 @@ namespace Infrastructure.Contexts.Config
             entity.HasIndex(x => x.FirstName);
             entity.HasQueryFilter(x => !x.IsDeleted);
         }
-    }
 }

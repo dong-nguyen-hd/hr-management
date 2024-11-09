@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using Business.Resources.Authentication;
+using Business.Resources.DTOs.Authentication;
 
-namespace Business.Mapping.Token
+namespace Business.Mapping.Token;
+
+public class ModelToResourceProfile : Profile
 {
-    public class ModelToResourceProfile : Profile
+    public ModelToResourceProfile()
     {
-        public ModelToResourceProfile()
-        {
-            CreateMap<Domain.Models.Token, TokenResource>()
+            CreateMap<Domain.Models.RefreshToken, TokenResource>()
                 .ForMember(x => x.AccessToken, opt => opt.Ignore());
         }
-    }
 }

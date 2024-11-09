@@ -3,17 +3,17 @@ using Business.Domain.Repositories;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
-{
-    public class CategoryPersonRepository : BaseRepository<CategoryPerson>, ICategoryPersonRepository
-    {
-        #region Constructor
-        public CategoryPersonRepository(AppDbContext context) : base(context) { }
-        #endregion
+namespace Infrastructure.Repositories;
 
-        #region Method
-        public async Task<bool> ValidateExistent(int personId, int categoryId)
-        {
+public class CategoryPersonRepository : BaseRepository<CategoryPerson>, ICategoryPersonRepository
+{
+    #region Constructor
+    public CategoryPersonRepository(CoreContext context) : base(context) { }
+    #endregion
+
+    #region Method
+    public async Task<bool> ValidateExistent(int personId, int categoryId)
+    {
             var result = await Context.CategoryPersons
             .Where(x => x.PersonId.Equals(personId) && x.CategoryId.Equals(categoryId))
             .CountAsync();
@@ -21,11 +21,10 @@ namespace Infrastructure.Repositories
             return result > 0 ? true : false;
         }
             
-        public async override Task<CategoryPerson> GetByIdAsync(int id) =>
-            await Context.CategoryPersons.Where(x => x.Id.Equals(id))
+    public async override Task<CategoryPerson> GetByIdAsync(int id) =>
+        await Context.CategoryPersons.Where(x => x.Id.Equals(id))
             .Include(x => x.Category)
             .ThenInclude(y => y.Technologies)
             .SingleOrDefaultAsync();
-        #endregion
-    }
+    #endregion
 }

@@ -2,21 +2,21 @@
 using Business.Domain.Repositories;
 using Business.Extensions;
 using Business.Resources;
-using Business.Resources.Group;
+using Business.Resources.DTOs.Group;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
-{
-    public class GroupRepository : BaseRepository<Group>, IGroupRepository
-    {
-        #region Constructor
-        public GroupRepository(AppDbContext context) : base(context) { }
-        #endregion
+namespace Infrastructure.Repositories;
 
-        #region Method
-        public async Task<IEnumerable<Group>> FindByNameAsync(string filterName)
-        {
+public class GroupRepository : BaseRepository<Group>, IGroupRepository
+{
+    #region Constructor
+    public GroupRepository(CoreContext context) : base(context) { }
+    #endregion
+
+    #region Method
+    public async Task<IEnumerable<Group>> FindByNameAsync(string filterName)
+    {
             var queryable = Context.Groups.AsQueryable();
 
             if (!string.IsNullOrEmpty(filterName))
@@ -29,8 +29,8 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Person>> GetListPersonByGroupIdAsync(int groupId)
-        {
+    public async Task<IEnumerable<Person>> GetListPersonByGroupIdAsync(int groupId)
+    {
             var projectQueryable = Context.Projects.Where(x => x.Group.Id == groupId).Select(x => x.PersonId);
 
             return await Context.People.Where(x => projectQueryable.Contains(x.Id))
@@ -49,8 +49,8 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<(IEnumerable<Group> records, int total)> GetPaginationAsync(QueryResource pagination, FilterGroupResource filterResource)
-        {
+    public async Task<(IEnumerable<Group> records, int total)> GetPaginationAsync(QueryResource pagination, FilterGroupResource filterResource)
+    {
             var queryable = ConditionFilter(filterResource);
 
             var total = await queryable.CountAsync();
@@ -64,8 +64,8 @@ namespace Infrastructure.Repositories
             return (records, total);
         }
 
-        private IQueryable<Group> ConditionFilter(FilterGroupResource filterResource)
-        {
+    private IQueryable<Group> ConditionFilter(FilterGroupResource filterResource)
+    {
             var queryable = Context.Groups.AsQueryable();
 
             if (filterResource != null)
@@ -85,6 +85,5 @@ namespace Infrastructure.Repositories
 
             return queryable;
         }
-        #endregion
-    }
+    #endregion
 }

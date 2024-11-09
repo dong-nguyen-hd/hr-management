@@ -1,15 +1,15 @@
-﻿namespace Business.Resources
-{
-    public class QueryResource
-    {
-        #region Property
-        public int Page { get; }
-        public int PageSize { get; }
-        #endregion
+﻿namespace Business.Resources;
 
-        #region Constructor
-        public QueryResource(int page, int pageSize)
-        {
+public class QueryResource
+{
+    #region Property
+    public int Page { get; }
+    public int PageSize { get; }
+    #endregion
+
+    #region Constructor
+    public QueryResource(int page, int pageSize)
+    {
             Page = page;
             PageSize = pageSize;
 
@@ -19,6 +19,5 @@
             if (PageSize <= 0 || PageSize > 20)
                 PageSize = 10;
         }
-        #endregion
-    }
+    #endregion
 }

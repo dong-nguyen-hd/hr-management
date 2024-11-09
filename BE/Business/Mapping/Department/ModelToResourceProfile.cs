@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Business.Resources.Department;
+using Business.Resources.DTOs.Department;
 
-namespace Business.Mapping.Department
+namespace Business.Mapping.Department;
+
+public class ModelToResourceProfile : Profile
 {
-    public class ModelToResourceProfile : Profile
+    public ModelToResourceProfile()
     {
-        public ModelToResourceProfile()
-        {
             CreateMap<Domain.Models.Department, DepartmentResource>();
         }
-    }
 }

@@ -1,6 +1,5 @@
-﻿namespace API.Controllers
+﻿namespace API.Controllers;
+
+public class PositionController
 {
-    public class PositionController
-    {
-    }
 }

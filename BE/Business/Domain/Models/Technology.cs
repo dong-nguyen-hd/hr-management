@@ -1,11 +1,12 @@
-﻿namespace Business.Domain.Models
+﻿using Business.Domain.Models.Base;
+using Business.Extensions;
+
+namespace Business.Domain.Models;
+
+public class Technology : BaseModel
 {
-    public class Technology
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsDeleted { get; set; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
-    }
+    public string Id { get; set; } = RelateText.GenId();
+    public string Name { get; set; } = null!;
+    public string CategoryId { get; set; }
+    public Category Category { get; set; }
 }

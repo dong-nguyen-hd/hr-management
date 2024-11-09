@@ -2,12 +2,11 @@
 using Business.Domain.Repositories;
 using Infrastructure.Contexts;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories;
+
+public class EducationRepository : BaseRepository<Education>, IEducationRepository
 {
-    public class EducationRepository : BaseRepository<Education>, IEducationRepository
-    {
-        #region Constructor
-        public EducationRepository(AppDbContext context) : base(context) { }
-        #endregion
-    }
+    #region Constructor
+    public EducationRepository(CoreContext context) : base(context) { }
+    #endregion
 }

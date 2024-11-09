@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Business.Resources.Person;
+using Business.Resources.DTOs.Person;
 
-namespace Business.Mapping.Person
+namespace Business.Mapping.Person;
+
+public class ResourceToResourceProfile : Profile
 {
-    public class ResourceToResourceProfile : Profile
+    public ResourceToResourceProfile()
     {
-        public ResourceToResourceProfile()
-        {
             CreateMap<PersonResource, PersonResourceView>();
         }
-    }
 }

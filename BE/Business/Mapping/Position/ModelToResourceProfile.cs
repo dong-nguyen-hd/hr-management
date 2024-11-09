@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Business.Resources.Position;
+using Business.Resources.DTOs.Position;
 
-namespace Business.Mapping.Position
+namespace Business.Mapping.Position;
+
+public class ModelToResourceProfile : Profile
 {
-    public class ModelToResourceProfile : Profile
+    public ModelToResourceProfile()
     {
-        public ModelToResourceProfile()
-        {
             CreateMap<Domain.Models.Position, PositionResource>();
         }
-    }
 }

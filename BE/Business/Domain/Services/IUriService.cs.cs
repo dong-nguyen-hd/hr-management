@@ -1,7 +1,6 @@
-﻿namespace Business.Domain.Services
+﻿namespace Business.Domain.Services;
+
+public interface IUriService
 {
-    public interface IUriService
-    {
-        Uri GetRouteUri(string route);
-    }
+    Uri GetRouteUri(string route);
 }

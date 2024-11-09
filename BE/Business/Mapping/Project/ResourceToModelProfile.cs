@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Business.Extensions;
-using Business.Resources.Project;
+using Business.Resources.DTOs.Project;
 
-namespace Business.Mapping.Project
+namespace Business.Mapping.Project;
+
+public class ResourceToModelProfile : Profile
 {
-    public class ResourceToModelProfile : Profile
+    public ResourceToModelProfile()
     {
-        public ResourceToModelProfile()
-        {
             CreateMap<CreateProjectResource, Domain.Models.Project>()
                 .ForMember(x => x.Position, opt => opt.MapFrom(src => src.Position.RemoveSpaceCharacter()))
                 .ForMember(x => x.OrderIndex, opt => opt.MapFrom(src => 1))
@@ -17,5 +17,4 @@ namespace Business.Mapping.Project
                 .ForMember(x => x.Position, opt => opt.MapFrom(src => src.Position.RemoveSpaceCharacter()))
                 .ForMember(x => x.Responsibilities, opt => opt.MapFrom(src => src.Responsibilities.RemoveSpaceCharacter()));
         }
-    }
 }

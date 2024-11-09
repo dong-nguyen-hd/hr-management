@@ -1,25 +1,19 @@
-﻿using Business.Communication;
-using Microsoft.AspNetCore.Mvc;
+﻿using Business.Resources.SystemData;
+using Business.Results;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace API.Controllers.Config
+namespace API.Controllers.Config;
+
+public static class InvalidResponseFactory
 {
-    public static class InvalidResponseFactory
+    public static IActionResult ProduceErrorResponse(ActionContext context)
     {
-        public static IActionResult ProduceErrorResponse(ActionContext context)
-        {
-            var errors = context.ModelState.GetErrorMessages();
-            var response = new BaseResponse<object>(messages: errors);
+        var error = context.ModelState.GetErrorMessages();
+        var response = new BaseResult<object>(CodeMessage._3001);
 
-            return new BadRequestObjectResult(response);
-        }
+        return new BadRequestObjectResult(response);
     }
 
-    public static class ModelStateExtensions
-    {
-        public static List<string> GetErrorMessages(this ModelStateDictionary dictionary)
-            => dictionary.SelectMany(m => m.Value.Errors)
-            .Select(m => m.ErrorMessage)
-            .ToList();
-    }
+    public static string? GetErrorMessages(this ModelStateDictionary dictionary)
+        => dictionary.SelectMany(m => m.Value.Errors).Select(m => m.ErrorMessage).FirstOrDefault();
 }

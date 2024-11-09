@@ -1,9 +1,8 @@
 ﻿using Business.Domain.Models;
-using Business.Resources.Position;
+using Business.Resources.DTOs.Position;
 
-namespace Business.Domain.Services
+namespace Business.Domain.Services;
+
+public interface IPositionService : IBaseService<PositionResource, CreatePositionResource, UpdatePositionResource, Position>
 {
-    public interface IPositionService : IBaseService<PositionResource, CreatePositionResource, UpdatePositionResource, Position>
-    {
-    }
 }

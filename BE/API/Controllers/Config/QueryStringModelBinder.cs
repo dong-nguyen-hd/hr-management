@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace API.Controllers.Config
+namespace API.Controllers.Config;
+
+class QueryStringModelBinder : IModelBinder
 {
-    class QueryStringModelBinder : IModelBinder
+    public Task BindModelAsync(ModelBindingContext bindingContext)
     {
-        public Task BindModelAsync(ModelBindingContext bindingContext)
-        {
             var result = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
 
             if (result == ValueProviderResult.None)
@@ -31,12 +31,12 @@ namespace API.Controllers.Config
 
             return Task.CompletedTask;
         }
-    }
+}
 
-    class QueryStringModelBinderProvider : IModelBinderProvider
+class QueryStringModelBinderProvider : IModelBinderProvider
+{
+    public IModelBinder GetBinder(ModelBinderProviderContext context)
     {
-        public IModelBinder GetBinder(ModelBinderProviderContext context)
-        {
             if (context.Metadata.ModelType == typeof(string) &&
             context.BindingInfo.BindingSource != null &&
             context.BindingInfo.BindingSource.CanAcceptDataFrom(BindingSource.Query))
@@ -46,5 +46,4 @@ namespace API.Controllers.Config
 
             return null;
         }
-    }
 }

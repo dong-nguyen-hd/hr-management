@@ -1,9 +1,8 @@
 ﻿using Business.Domain.Models;
-using Business.Resources.Technology;
+using Business.Resources.DTOs.Technology;
 
-namespace Business.Domain.Services
+namespace Business.Domain.Services;
+
+public interface ITechnologyService : IBaseService<TechnologyResource, CreateTechnologyResource, UpdateTechnologyResource, Technology>
 {
-    public interface ITechnologyService : IBaseService<TechnologyResource, CreateTechnologyResource, UpdateTechnologyResource, Technology>
-    {
-    }
 }

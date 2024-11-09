@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Contexts.Config
+namespace Infrastructure.Contexts.Config;
+
+/// <summary>
+/// Setting schema for Pay table
+/// </summary>
+public class PayConfig : IEntityTypeConfiguration<Pay>
 {
-    /// <summary>
-    /// Setting schema for Pay table
-    /// </summary>
-    public class PayConfig : IEntityTypeConfiguration<Pay>
+    public void Configure(EntityTypeBuilder<Pay> entity)
     {
-        public void Configure(EntityTypeBuilder<Pay> entity)
-        {
             entity.ToTable("Pay");
             entity.Property(x => x.BaseSalary).HasColumnType("money");
             entity.Property(x => x.Allowance).HasColumnType("money");
@@ -24,5 +24,4 @@ namespace Infrastructure.Contexts.Config
             entity.Property(x => x.WorkDay).HasColumnType("decimal(3,1)");
             entity.HasQueryFilter(x => !x.IsDeleted);
         }
-    }
 }

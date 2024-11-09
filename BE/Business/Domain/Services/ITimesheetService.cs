@@ -1,11 +1,10 @@
-﻿using Business.Communication;
-using Business.Resources.Timesheet;
+﻿using Business.Resources.DTOs.Timesheet;
+using Business.Results;
 
-namespace Business.Domain.Services
+namespace Business.Domain.Services;
+
+public interface ITimesheetService
 {
-    public interface ITimesheetService
-    {
-        Task<BaseResponse<TimesheetResource>> ImportAsync(Stream stream);
-        Task<BaseResponse<TimesheetResource>> GetTimesheetByPersonIdAsync(int personId, DateTime date);
-    }
+    Task<BaseResult<TimesheetResource>> ImportAsync(Stream stream);
+    Task<BaseResult<TimesheetResource>> GetTimesheetByPersonIdAsync(int personId, DateTime date);
 }

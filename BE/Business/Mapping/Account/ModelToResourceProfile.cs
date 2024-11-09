@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Business.Domain.Services;
 using Business.Resources;
-using Business.Resources.Account;
-using Business.Resources.Authentication;
-using Business.Resources.Information;
+using Business.Resources.DTOs.Account;
+using Business.Resources.DTOs.Authentication;
+using Business.Resources.DTOs.Information;
 using Microsoft.Extensions.Options;
 
-namespace Business.Mapping.Account
+namespace Business.Mapping.Account;
+
+public class ModelToResourceProfile : Profile
 {
-    public class ModelToResourceProfile : Profile
+    public ModelToResourceProfile()
     {
-        public ModelToResourceProfile()
-        {
             CreateMap<Domain.Models.Account, AccountResource>()
                 .ForMember(x => x.Groups, opt => opt.MapFrom(src => src.Groups))
                 .ForMember(x => x.Avatar, opt => opt.MapFrom<CustomResolver>());
@@ -19,29 +19,29 @@ namespace Business.Mapping.Account
             CreateMap<Domain.Models.Account, AccessTokenResource>()
                 .ForMember(x => x.Avatar, opt => opt.MapFrom<CustomResolver>());
         }
-    }
+}
 
-    /// <summary>
-    /// Custom Value Resolvers
-    /// </summary>
-    class CustomResolver : IValueResolver<Domain.Models.Account, AccountResource, AvatarResource>
+/// <summary>
+/// Custom Value Resolvers
+/// </summary>
+class CustomResolver : IValueResolver<Domain.Models.Account, AccountResource, AvatarResource>
+{
+    #region Property
+    private readonly IUriService _uriService;
+    private readonly HostResource _hostResource;
+    #endregion
+
+    #region Constructor
+    public CustomResolver(IUriService uriService, IOptionsSnapshot<HostResource> hostResource)
     {
-        #region Property
-        private readonly IUriService _uriService;
-        private readonly HostResource _hostResource;
-        #endregion
-
-        #region Constructor
-        public CustomResolver(IUriService uriService, IOptionsSnapshot<HostResource> hostResource)
-        {
             this._uriService = uriService;
             this._hostResource = hostResource.Value;
         }
-        #endregion
+    #endregion
 
-        #region Method
-        public AvatarResource Resolve(Domain.Models.Account source, AccountResource destination, AvatarResource destMember, ResolutionContext context)
-        {
+    #region Method
+    public AvatarResource Resolve(Domain.Models.Account source, AccountResource destination, AvatarResource destMember, ResolutionContext context)
+    {
             if (!string.IsNullOrEmpty(source.Avatar))
             {
                 return new AvatarResource
@@ -53,6 +53,5 @@ namespace Business.Mapping.Account
 
             return null;
         }
-        #endregion
-    }
+    #endregion
 }

@@ -1,12 +1,11 @@
-﻿using Business.Communication;
-using Business.Resources.Authentication;
+﻿using Business.Resources.DTOs.Authentication;
+using Business.Results;
 
-namespace Business.Domain.Services
+namespace Business.Domain.Services;
+
+public interface ITokenManagementService
 {
-    public interface ITokenManagementService
-    {
-        Task<BaseResponse<AccessTokenResource>> GenerateTokensAsync(LoginResource loginResource, DateTime now, string userAgent);
-        Task<BaseResponse<TokenResource>> GenerateNewTokensAsync(RefreshTokenResource loginResource, DateTime now);
-        Task<BaseResponse<object>> LogoutAsync(LogoutResource logoutResource);
-    }
+    Task<BaseResult<AccessTokenResource>> GenerateTokensAsync(LoginResource loginResource, DateTime now, string userAgent);
+    Task<BaseResult<TokenResource>> GenerateNewTokensAsync(RefreshTokenResource loginResource, DateTime now);
+    Task<BaseResult<object>> LogoutAsync(LogoutResource logoutResource);
 }

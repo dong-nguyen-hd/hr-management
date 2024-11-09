@@ -1,10 +1,9 @@
 ﻿using Business.Domain.Models;
-using Business.Resources.Pay;
+using Business.Resources.DTOs.Pay;
 
-namespace Business.Domain.Services
+namespace Business.Domain.Services;
+
+public interface IPayService : IBaseService<PayResource, CreatePayResource, UpdatePayResource, Pay>
 {
-    public interface IPayService : IBaseService<PayResource, CreatePayResource, UpdatePayResource, Pay>
-    {
 
-    }
 }

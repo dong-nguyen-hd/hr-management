@@ -1,24 +1,24 @@
-﻿using Business.Data;
-using Business.Domain.Models;
+﻿using Business.Domain.Models;
 using Business.Domain.Repositories;
 using Business.Extensions;
 using Business.Resources;
-using Business.Resources.Account;
-using Business.Resources.Authentication;
+using Business.Resources.DTOs.Account;
+using Business.Resources.DTOs.Authentication;
+using Business.Resources.Enums;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
-{
-    public class AccountRepository : BaseRepository<Account>, IAccountRepository
-    {
-        #region Constructor
-        public AccountRepository(AppDbContext context) : base(context) { }
-        #endregion
+namespace Infrastructure.Repositories;
 
-        #region Method
-        public async Task<Account> GetByIdIncludeGroupAsync(int accountId, bool isTracking = false)
-        {
+public class AccountRepository : BaseRepository<Account>, IAccountRepository
+{
+    #region Constructor
+    public AccountRepository(CoreContext context) : base(context) { }
+    #endregion
+
+    #region Method
+    public async Task<Account> GetByIdIncludeGroupAsync(int accountId, bool isTracking = false)
+    {
             var queryable = Context.Accounts.Where(x => x.Id.Equals(accountId));
 
             if (!isTracking) queryable = queryable.AsNoTracking();
@@ -26,8 +26,8 @@ namespace Infrastructure.Repositories
             return await queryable.AsSplitQuery().Include(x => x.Groups).SingleOrDefaultAsync();
         }
 
-        public async Task<Account> GetByIdAsync(int id, bool hasToken)
-        {
+    public async Task<Account> GetByIdAsync(int id, bool hasToken)
+    {
             var queryable = Context.Accounts.Where(x => x.Id.Equals(id));
 
             if (hasToken) queryable.Include(x => x.Tokens);
@@ -35,8 +35,8 @@ namespace Infrastructure.Repositories
             return await queryable.SingleOrDefaultAsync();
         }
 
-        public async Task<(IEnumerable<Account> records, int total)> GetPaginationAsync(QueryResource pagination, FilterAccountResource filterResource, eRole? role)
-        {
+    public async Task<(IEnumerable<Account> records, int total)> GetPaginationAsync(QueryResource pagination, FilterAccountResource filterResource, eRole? role)
+    {
             var queryable = ConditionFilter(filterResource, role);
 
             var total = await queryable.CountAsync();
@@ -50,8 +50,8 @@ namespace Infrastructure.Repositories
             return (records, total);
         }
 
-        private IQueryable<Account> ConditionFilter(FilterAccountResource filterResource, eRole? role)
-        {
+    private IQueryable<Account> ConditionFilter(FilterAccountResource filterResource, eRole? role)
+    {
             var queryable = Context.Accounts.AsQueryable();
 
             if (filterResource != null)
@@ -75,10 +75,10 @@ namespace Infrastructure.Repositories
             return queryable;
         }
 
-        public async Task<int> TotalRecordAsync() => await Context.Accounts.CountAsync();
+    public async Task<int> TotalRecordAsync() => await Context.Accounts.CountAsync();
 
-        public async Task<Account> ValidateCredentialsAsync(LoginResource loginResource)
-        {
+    public async Task<Account> ValidateCredentialsAsync(LoginResource loginResource)
+    {
             var accountStored = await Context.Accounts
                 .Where(x => x.UserName == loginResource.UserName.ToLower())
                 .SingleOrDefaultAsync();
@@ -96,18 +96,17 @@ namespace Infrastructure.Repositories
             }
         }
 
-        /// <summary>
-        /// Is user-name contain in database
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns>
-        /// <list type="bullet">
-        /// <item>True: valid</item>
-        /// <item>False: invalid</item>
-        /// </list>
-        /// </returns>
-        public async Task<bool> ValidateUserNameAsync(string userName) =>
-            !await Context.Accounts.Where(x => x.UserName == userName).AnyAsync();
-        #endregion
-    }
+    /// <summary>
+    /// Is user-name contain in database
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns>
+    /// <list type="bullet">
+    /// <item>True: valid</item>
+    /// <item>False: invalid</item>
+    /// </list>
+    /// </returns>
+    public async Task<bool> ValidateUserNameAsync(string userName) =>
+        !await Context.Accounts.Where(x => x.UserName == userName).AnyAsync();
+    #endregion
 }

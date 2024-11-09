@@ -1,39 +1,39 @@
-﻿using Business.Communication;
-using Business.Domain.Services;
+﻿using Business.Domain.Services;
 using Business.Resources;
-using Business.Resources.Authentication;
+using Business.Resources.DTOs.Authentication;
+using Business.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Serilog;
 
-namespace API.Controllers
-{
-    [ApiController]
-    [Route("api/v1/token")]
-    public class TokenController : ControllerBase
-    {
-        #region Property
-        private readonly ITokenManagementService _tokenManagementService;
-        protected readonly ResponseMessage ResponseMessage;
-        #endregion
+namespace API.Controllers;
 
-        #region Constructor
-        public TokenController(ITokenManagementService tokenManagementService,
-            IOptionsMonitor<ResponseMessage> responseMessage)
-        {
+[ApiController]
+[Route("api/v1/token")]
+public class TokenController : ControllerBase
+{
+    #region Property
+    private readonly ITokenManagementService _tokenManagementService;
+    protected readonly ResponseMessage ResponseMessage;
+    #endregion
+
+    #region Constructor
+    public TokenController(ITokenManagementService tokenManagementService,
+        IOptionsMonitor<ResponseMessage> responseMessage)
+    {
             this._tokenManagementService = tokenManagementService;
             this.ResponseMessage = responseMessage.CurrentValue;
         }
-        #endregion
+    #endregion
 
-        #region Action
-        [AllowAnonymous]
-        [HttpPost("login")]
-        [ProducesResponseType(typeof(BaseResponse<AccessTokenResource>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<AccessTokenResource>), StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginResource resource)
-        {
+    #region Action
+    [AllowAnonymous]
+    [HttpPost("login")]
+    [ProducesResponseType(typeof(BaseResult<AccessTokenResource>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResult<AccessTokenResource>), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> LoginAsync([FromBody] LoginResource resource)
+    {
             string userAgent = Request.Headers["User-Agent"].ToString();
             var result = await _tokenManagementService.GenerateTokensAsync(resource, DateTime.UtcNow, userAgent);
 
@@ -46,12 +46,12 @@ namespace API.Controllers
             return Unauthorized(result);
         }
 
-        [AllowAnonymous]
-        [HttpPost("refresh-token")]
-        [ProducesResponseType(typeof(BaseResponse<TokenResource>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<TokenResource>), StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GenerateNewTokensAsync([FromBody] RefreshTokenResource resource)
-        {
+    [AllowAnonymous]
+    [HttpPost("refresh-token")]
+    [ProducesResponseType(typeof(BaseResult<TokenResource>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResult<TokenResource>), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> GenerateNewTokensAsync([FromBody] RefreshTokenResource resource)
+    {
             resource.UserAgent = Request.Headers["User-Agent"].ToString();
             var result = await _tokenManagementService.GenerateNewTokensAsync(resource, DateTime.UtcNow);
 
@@ -63,12 +63,12 @@ namespace API.Controllers
             return Unauthorized(result);
         }
 
-        [AllowAnonymous]
-        [HttpPost("logout")]
-        [ProducesResponseType(typeof(BaseResponse<object>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<object>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> LogoutAsync([FromBody] LogoutResource resource)
-        {
+    [AllowAnonymous]
+    [HttpPost("logout")]
+    [ProducesResponseType(typeof(BaseResult<object>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResult<object>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> LogoutAsync([FromBody] LogoutResource resource)
+    {
             Log.Information($"Refresh-Token-Id {resource.Id}: is log out.");
 
             var result = await _tokenManagementService.LogoutAsync(resource);
@@ -78,6 +78,5 @@ namespace API.Controllers
 
             return Ok(result);
         }
-        #endregion
-    }
+    #endregion
 }

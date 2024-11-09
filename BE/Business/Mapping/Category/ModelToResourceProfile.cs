@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Business.Resources.Category;
+using Business.Resources.DTOs.Category;
 
-namespace Business.Mapping.Category
+namespace Business.Mapping.Category;
+
+public class ModelToResourceProfile : Profile
 {
-    public class ModelToResourceProfile : Profile
+    public ModelToResourceProfile()
     {
-        public ModelToResourceProfile()
-        {
             CreateMap<Domain.Models.Category, CategoryResource>();
         }
-    }
 }

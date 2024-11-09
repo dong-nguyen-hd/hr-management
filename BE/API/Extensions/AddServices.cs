@@ -7,12 +7,12 @@ using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
-namespace API.Extensions
+namespace API.Extensions;
+
+public static class AddServices
 {
-    public static class AddServices
+    public static void AddDependencyInjection(this IServiceCollection services)
     {
-        public static void AddDependencyInjection(this IServiceCollection services)
-        {
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IPersonService, PersonService>();
 
@@ -66,48 +66,5 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(ModelToResourceProfile));
         }
 
-        public static void AddCustomizeSwagger(this IServiceCollection services)
-        {
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Human Resource Management for IT Company", Version = "v1.0" });
-                c.OperationFilter<SwaggerFileOperationFilter>();
-
-                var securityScheme = new OpenApiSecurityScheme
-                {
-                    Name = "Human Resource Management for IT Company",
-                    Description = "Enter JWT Bearer token **_only_**",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer", // Must be lower case
-                    BearerFormat = "JWT",
-                    Reference = new OpenApiReference
-                    {
-                        Id = JwtBearerDefaults.AuthenticationScheme,
-                        Type = ReferenceType.SecurityScheme
-                    }
-                };
-                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {securityScheme, new string[] { }}
-                });
-            });
-        }
-
-        public static void AddCronJob<T>(this IServiceCollection services, Action<IScheduleConfig<T>> options) where T : CronJobService
-        {
-            if (options == null)
-                throw new ArgumentNullException(nameof(options), "Please provide Schedule Configurations.");
-
-            var config = new ScheduleConfig<T>();
-            options.Invoke(config);
-
-            if (string.IsNullOrWhiteSpace(config.CronExpression))
-                throw new ArgumentNullException(nameof(ScheduleConfig<T>.CronExpression), "Empty Cron Expression is not allowed.");
-
-            services.AddSingleton<IScheduleConfig<T>>(config);
-            services.AddHostedService<T>();
-        }
-    }
+    
 }

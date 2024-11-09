@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Business.Resources.Timesheet;
+using Business.Resources.DTOs.Timesheet;
 
-namespace Business.Mapping.Timesheet
+namespace Business.Mapping.Timesheet;
+
+public class ModelToResourceProfile : Profile
 {
-    public class ModelToResourceProfile : Profile
+    public ModelToResourceProfile()
     {
-        public ModelToResourceProfile()
-        {
             CreateMap<Domain.Models.Timesheet, TimesheetResource>();
         }
-    }
 }

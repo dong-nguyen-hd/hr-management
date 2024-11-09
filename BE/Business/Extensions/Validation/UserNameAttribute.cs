@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace Business.Extensions.Validation
+namespace Business.Extensions.Validation;
+
+public class UserNameAttribute : ValidationAttribute
 {
-    public class UserNameAttribute : ValidationAttribute
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
             try
             {
                 if(value is null)
@@ -22,5 +22,4 @@ namespace Business.Extensions.Validation
                 return new ValidationResult("Invalid User name field.");
             }
         }
-    }
 }

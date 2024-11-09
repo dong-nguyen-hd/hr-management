@@ -3,20 +3,19 @@ using Business.Domain.Models;
 using Business.Domain.Repositories;
 using Business.Domain.Services;
 using Business.Resources;
-using Business.Resources.Education;
+using Business.Resources.DTOs.Education;
 using Microsoft.Extensions.Options;
 
-namespace Business.Services
+namespace Business.Services;
+
+public class EducationService : BaseService<EducationResource, CreateEducationResource, UpdateEducationResource, Education>, IEducationService
 {
-    public class EducationService : BaseService<EducationResource, CreateEducationResource, UpdateEducationResource, Education>, IEducationService
+    #region Constructor
+    public EducationService(IEducationRepository educationRepository,
+        IMapper mapper,
+        IUnitOfWork unitOfWork,
+        IOptionsMonitor<ResponseMessage> responseMessage) : base(educationRepository, mapper, unitOfWork, responseMessage)
     {
-        #region Constructor
-        public EducationService(IEducationRepository educationRepository,
-            IMapper mapper,
-            IUnitOfWork unitOfWork,
-            IOptionsMonitor<ResponseMessage> responseMessage) : base(educationRepository, mapper, unitOfWork, responseMessage)
-        {
         }
-        #endregion
-    }
+    #endregion
 }

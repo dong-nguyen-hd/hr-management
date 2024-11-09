@@ -1,16 +1,15 @@
-﻿using Business.Communication;
-using Business.Domain.Models;
+﻿using Business.Domain.Models;
 using Business.Resources;
-using Business.Resources.Group;
-using Business.Resources.Person;
+using Business.Resources.DTOs.Group;
+using Business.Resources.DTOs.Person;
+using Business.Results;
 
-namespace Business.Domain.Services
+namespace Business.Domain.Services;
+
+public interface IGroupService : IBaseService<GroupResource, CreateGroupResource, UpdateGroupResource, Group>
 {
-    public interface IGroupService : IBaseService<GroupResource, CreateGroupResource, UpdateGroupResource, Group>
-    {
-        Task<PaginationResponse<IEnumerable<GroupResource>>> GetPaginationAsync(QueryResource pagination, FilterGroupResource filterResource);
-        Task<BaseResponse<GroupResource>> AddGroupToAccountAsync(int accountId, int groupId);
-        Task<BaseResponse<GroupResource>> RemoveGroupFromAccountAsync(int accountId, int groupId);
-        Task<BaseResponse<IEnumerable<PersonResource>>> GetListPersonByGroupIdAsync(int groupId);
-    }
+    Task<PaginationResult<IEnumerable<GroupResource>>> GetPaginationAsync(QueryResource pagination, FilterGroupResource filterResource);
+    Task<BaseResult<GroupResource>> AddGroupToAccountAsync(int accountId, int groupId);
+    Task<BaseResult<GroupResource>> RemoveGroupFromAccountAsync(int accountId, int groupId);
+    Task<BaseResult<IEnumerable<PersonResource>>> GetListPersonByGroupIdAsync(int groupId);
 }

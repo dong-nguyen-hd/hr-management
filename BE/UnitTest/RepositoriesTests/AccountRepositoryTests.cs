@@ -1,18 +1,18 @@
-﻿using Business.Data;
-using Business.Domain.Models;
+﻿using Business.Domain.Models;
 using Business.Extensions;
-using Business.Resources.Authentication;
+using Business.Resources.DTOs.Authentication;
+using Business.Resources.Enums;
 using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using UnitTest.Tool;
 
-namespace UnitTest.RepositoriesTests
+namespace UnitTest.RepositoriesTests;
+
+public class AccountRepositoryTests : TestWithSqlite<CoreContext>
 {
-    public class AccountRepositoryTests : TestWithSqlite<AppDbContext>
+    #region Private work
+    private static void SeedDatabaseThreeAccount(CoreContext context)
     {
-        #region Private work
-        private static void SeedDatabaseThreeAccount(AppDbContext context)
-        {
             context.Accounts.AddRange(
                 new Account
                 {
@@ -56,14 +56,14 @@ namespace UnitTest.RepositoriesTests
             );
             context.SaveChanges();
         }
-        #endregion
+    #endregion
 
-        #region Test
-        [Fact]
-        public async Task GetWithPrimaryKeyAsync_WithThreeIds_ShouldEqual()
-        {
+    #region Test
+    [Fact]
+    public async Task GetWithPrimaryKeyAsync_WithThreeIds_ShouldEqual()
+    {
             // Arrange
-            using var context = new AppDbContext(Options);
+            using var context = new CoreContext(Options);
             context.Database.EnsureCreated();
             SeedDatabaseThreeAccount(context);
 
@@ -77,11 +77,11 @@ namespace UnitTest.RepositoriesTests
             Assert.Equal(Enumerable.Count(result), ids.Count);
         }
 
-        [Fact]
-        public void RemoveRange_ShouldNotEqual()
-        {
+    [Fact]
+    public void RemoveRange_ShouldNotEqual()
+    {
             // Arrange
-            using var context = new AppDbContext(Options);
+            using var context = new CoreContext(Options);
             context.Database.EnsureCreated();
             SeedDatabaseThreeAccount(context);
 
@@ -98,11 +98,11 @@ namespace UnitTest.RepositoriesTests
             Assert.NotEqual(accountDeleted, listAccount);
         }
 
-        [Fact]
-        public void ValidateCredentialsAsync_ShouldEqual()
-        {
+    [Fact]
+    public void ValidateCredentialsAsync_ShouldEqual()
+    {
             // Arrange
-            using var context = new AppDbContext(Options);
+            using var context = new CoreContext(Options);
             context.Database.EnsureCreated();
             SeedDatabaseThreeAccount(context);
 
@@ -116,11 +116,11 @@ namespace UnitTest.RepositoriesTests
             Assert.Equal("admin1", account.UserName);
         }
 
-        [Fact]
-        public void ValidateUserNameAsync_ShouldInvalid()
-        {
+    [Fact]
+    public void ValidateUserNameAsync_ShouldInvalid()
+    {
             // Arrange
-            using var context = new AppDbContext(Options);
+            using var context = new CoreContext(Options);
             context.Database.EnsureCreated();
             SeedDatabaseThreeAccount(context);
 
@@ -132,6 +132,5 @@ namespace UnitTest.RepositoriesTests
             // Assert
             Assert.False(isValid);
         }
-        #endregion
-    }
+    #endregion
 }

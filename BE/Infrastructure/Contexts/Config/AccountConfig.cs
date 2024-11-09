@@ -1,19 +1,20 @@
-﻿using Business.Data;
-using Business.Domain.Models;
+﻿using Business.Domain.Models;
 using Business.Extensions;
+using Business.Resources.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Contexts.Config
+namespace Infrastructure.Contexts.Config;
+
+/// <summary>
+/// Setting schema for Account table
+/// </summary>
+public class AccountConfig : IEntityTypeConfiguration<Account>
 {
-    /// <summary>
-    /// Setting schema for Account table
-    /// </summary>
-    public class AccountConfig : IEntityTypeConfiguration<Account>
+    public void Configure(EntityTypeBuilder<Account> entity)
     {
-        public void Configure(EntityTypeBuilder<Account> entity)
-        {
-            entity.ToTable("Account");
+            entity.ToTable("account");
+            
             entity.Property(x => x.UserName).IsRequired().HasColumnType("varchar(125)");
             entity.Property(x => x.Password).IsRequired().HasColumnType("varchar(125)");
             entity.Property(x => x.Name).IsRequired().HasColumnType("nvarchar(500)");
@@ -41,5 +42,4 @@ namespace Infrastructure.Contexts.Config
                 }
             );
         }
-    }
 }

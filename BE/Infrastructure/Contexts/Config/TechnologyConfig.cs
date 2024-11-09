@@ -2,19 +2,23 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Contexts.Config
+namespace Infrastructure.Contexts.Config;
+
+/// <summary>
+/// Setting schema for Technology table
+/// </summary>
+public class TechnologyConfig : IEntityTypeConfiguration<Technology>
 {
-    /// <summary>
-    /// Setting schema for Technology table
-    /// </summary>
-    public class TechnologyConfig : IEntityTypeConfiguration<Technology>
+    public void Configure(EntityTypeBuilder<Technology> entity)
     {
-        public void Configure(EntityTypeBuilder<Technology> entity)
-        {
-            entity.ToTable("Technology");
-            entity.Property(x => x.Name).IsRequired().HasColumnType("nvarchar(500)");
-            entity.HasIndex(x => x.Name);
-            entity.HasQueryFilter(x => !x.IsDeleted);
-        }
+        entity.ToTable("tbl_technology");
+
+        entity.Property(x => x.CreatedDatetimeUtc).HasColumnType("timestamp without time zone");
+        entity.Property(x => x.UpdatedDatetimeUtc).HasColumnType("timestamp without time zone");
+
+        entity.HasKey(x => x.Id);
+        entity.HasQueryFilter(x => x.Active);
+
+        entity.HasIndex(x => new { x.Name, x.Active });
     }
 }

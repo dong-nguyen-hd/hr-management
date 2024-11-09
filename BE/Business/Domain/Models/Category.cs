@@ -1,11 +1,12 @@
-﻿namespace Business.Domain.Models
+﻿using Business.Domain.Models.Base;
+
+namespace Business.Domain.Models;
+
+public class Category : BaseModel
 {
-    public class Category
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsDeleted { get; set; }
-        public HashSet<CategoryPerson> ListCategoryPerson { get; set; }
-        public HashSet<Technology> Technologies { get; set; }
-    }
+    public string Id { get; set; } = RelateText.GenId();
+    public string Name { get; set; }
+    public bool IsDeleted { get; set; }
+    public HashSet<CategoryPerson> ListCategoryPerson { get; set; }
+    public HashSet<Technology> Technologies { get; set; }
 }

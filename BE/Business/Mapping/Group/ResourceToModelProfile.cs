@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Business.Extensions;
-using Business.Resources.Group;
+using Business.Resources.DTOs.Group;
 
-namespace Business.Mapping.Group
+namespace Business.Mapping.Group;
+
+public class ResourceToModelProfile : Profile
 {
-    public class ResourceToModelProfile : Profile
+    public ResourceToModelProfile()
     {
-        public ResourceToModelProfile()
-        {
             CreateMap<CreateGroupResource, Domain.Models.Group>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Name.RemoveSpaceCharacter()))
                 .ForMember(x => x.Description, opt => opt.MapFrom(src => src.Description.RemoveSpaceCharacter()))
@@ -18,5 +18,4 @@ namespace Business.Mapping.Group
                 .ForMember(x => x.Description, opt => opt.MapFrom(src => src.Description.RemoveSpaceCharacter()))
                 .ForMember(x => x.Technologies, opt => opt.MapFrom(src => src.Technologies.ConcatenateWithComma()));
         }
-    }
 }

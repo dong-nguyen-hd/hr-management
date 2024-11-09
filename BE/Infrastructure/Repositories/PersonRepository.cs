@@ -2,21 +2,21 @@
 using Business.Domain.Repositories;
 using Business.Extensions;
 using Business.Resources;
-using Business.Resources.Person;
+using Business.Resources.DTOs.Person;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
-{
-    public class PersonRepository : BaseRepository<Person>, IPersonRepository
-    {
-        #region Constructor
-        public PersonRepository(AppDbContext context) : base(context) { }
-        #endregion
+namespace Infrastructure.Repositories;
 
-        #region Method
-        public async Task<(IEnumerable<Person> records, int total)> GetPaginationWithSalaryAsync(QueryResource pagination, FilterPersonSalaryResource filterResource)
-        {
+public class PersonRepository : BaseRepository<Person>, IPersonRepository
+{
+    #region Constructor
+    public PersonRepository(CoreContext context) : base(context) { }
+    #endregion
+
+    #region Method
+    public async Task<(IEnumerable<Person> records, int total)> GetPaginationWithSalaryAsync(QueryResource pagination, FilterPersonSalaryResource filterResource)
+    {
             DateTime now = filterResource.Date != null ? (DateTime)filterResource.Date : DateTime.UtcNow;
 
             var queryable = ConditionFilter(filterResource);
@@ -36,8 +36,8 @@ namespace Infrastructure.Repositories
             return (records, total);
         }
 
-        public async Task<(IEnumerable<Person> records, int total)> GetPaginationAsync(QueryResource pagination, FilterPersonResource filterResource)
-        {
+    public async Task<(IEnumerable<Person> records, int total)> GetPaginationAsync(QueryResource pagination, FilterPersonResource filterResource)
+    {
             var queryable = ConditionFilter(filterResource);
 
             var total = await queryable.CountAsync();
@@ -62,27 +62,27 @@ namespace Infrastructure.Repositories
             return (records, total);
         }
 
-        public override async Task<Person> GetByIdAsync(int id) =>
-            await Context.People
-                .AsSplitQuery()
-                .Include(y => y.Department)
-                .Include(y => y.Position)
-                .Include(y => y.WorkHistories.OrderByDescending(z => z.OrderIndex))
-                .Include(y => y.CategoryPersons.OrderByDescending(z => z.OrderIndex))
-                .ThenInclude(z => z.Category)
-                .Include(y => y.Educations.OrderByDescending(z => z.OrderIndex))
-                .Include(y => y.Certificates.OrderByDescending(z => z.OrderIndex))
-                .Include(y => y.Group)
-                .Include(y => y.Projects.OrderByDescending(z => z.OrderIndex))
-                .ThenInclude(z => z.Group)
-                .SingleOrDefaultAsync(x => x.Id == id);
+    public override async Task<Person> GetByIdAsync(int id) =>
+        await Context.People
+            .AsSplitQuery()
+            .Include(y => y.Department)
+            .Include(y => y.Position)
+            .Include(y => y.WorkHistories.OrderByDescending(z => z.OrderIndex))
+            .Include(y => y.CategoryPersons.OrderByDescending(z => z.OrderIndex))
+            .ThenInclude(z => z.Category)
+            .Include(y => y.Educations.OrderByDescending(z => z.OrderIndex))
+            .Include(y => y.Certificates.OrderByDescending(z => z.OrderIndex))
+            .Include(y => y.Group)
+            .Include(y => y.Projects.OrderByDescending(z => z.OrderIndex))
+            .ThenInclude(z => z.Group)
+            .SingleOrDefaultAsync(x => x.Id == id);
 
-        public async Task<int> TotalRecordAsync() =>
-            await Context.People.CountAsync();
+    public async Task<int> TotalRecordAsync() =>
+        await Context.People.CountAsync();
 
-        #region Private work
-        private IQueryable<Person> ConditionFilter(FilterPersonSalaryResource filterResource)
-        {
+    #region Private work
+    private IQueryable<Person> ConditionFilter(FilterPersonSalaryResource filterResource)
+    {
             var queryable = Context.People.AsQueryable();
 
             if (filterResource != null)
@@ -106,8 +106,8 @@ namespace Infrastructure.Repositories
             return queryable;
         }
 
-        private IQueryable<Person> ConditionFilter(FilterPersonResource filterResource)
-        {
+    private IQueryable<Person> ConditionFilter(FilterPersonResource filterResource)
+    {
             var queryable = Context.People.AsQueryable();
 
             if (filterResource != null)
@@ -175,8 +175,7 @@ namespace Infrastructure.Repositories
 
             return queryable;
         }
-        #endregion
+    #endregion
 
-        #endregion
-    }
+    #endregion
 }

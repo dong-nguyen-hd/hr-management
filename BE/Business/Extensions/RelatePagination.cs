@@ -1,32 +1,31 @@
-﻿using Business.Communication;
-using Business.Resources;
+﻿using Business.Resources;
+using Business.Results;
 
-namespace Business.Extensions
+namespace Business.Extensions;
+
+public static class RelatePagination
 {
-    public static class RelatePagination
+    public static void CreatePaginationResponse<Response, Pagination>(this PaginationResult<Response> result,
+        Pagination pagination,
+        int totalRecords) where Pagination : QueryResource
     {
-        public static void CreatePaginationResponse<Response, Pagination>(this PaginationResponse<Response> response,
-            Pagination pagination,
-            int totalRecords) where Pagination : QueryResource
-        {
             // Assign Query-Resource
-            response.Page = pagination.Page;
-            response.PageSize = pagination.PageSize;
+            result.Page = pagination.Page;
+            result.PageSize = pagination.PageSize;
             // Assign Total-Pages
             var totalPages = ((double)totalRecords / (double)pagination.PageSize);
             int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
             // Assign Next-Page
-            response.NextPage = (pagination.Page >= 1 && pagination.Page < roundedTotalPages) ? pagination.Page + 1 : null;
+            result.NextPage = (pagination.Page >= 1 && pagination.Page < roundedTotalPages) ? pagination.Page + 1 : null;
             // Assign Previous-Page
-            response.PreviousPage = (pagination.Page - 1 >= 1 && pagination.Page <= roundedTotalPages) ? pagination.Page - 1 : null;
+            result.PreviousPage = (pagination.Page - 1 >= 1 && pagination.Page <= roundedTotalPages) ? pagination.Page - 1 : null;
             // Assign First-Page
-            response.FirstPage = 1;
+            result.FirstPage = 1;
             // Assign Last-Page
-            response.LastPage = roundedTotalPages;
+            result.LastPage = roundedTotalPages;
             // Assign Total-Pages
-            response.TotalPages = roundedTotalPages;
+            result.TotalPages = roundedTotalPages;
             // Assign Total-Records
-            response.TotalRecords = totalRecords;
+            result.TotalRecords = totalRecords;
         }
-    }
 }

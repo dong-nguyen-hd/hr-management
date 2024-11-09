@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
 using Business.Extensions;
-using Business.Resources.Technology;
+using Business.Resources.DTOs.Technology;
 
-namespace Business.Mapping.Technology
+namespace Business.Mapping.Technology;
+
+public class ResourceToModelProfile : Profile
 {
-    public class ResourceToModelProfile : Profile
+    public ResourceToModelProfile()
     {
-        public ResourceToModelProfile()
-        {
             CreateMap<CreateTechnologyResource, Domain.Models.Technology>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Name.RemoveSpaceCharacter()));
 
             CreateMap<UpdateTechnologyResource, Domain.Models.Technology>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Name.RemoveSpaceCharacter()));
         }
-    }
 }

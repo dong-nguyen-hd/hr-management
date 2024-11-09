@@ -1,12 +1,11 @@
-﻿using Business.Communication;
-using Business.Domain.Models;
+﻿using Business.Domain.Models;
 using Business.Resources;
-using Business.Resources.Category;
+using Business.Resources.DTOs.Category;
+using Business.Results;
 
-namespace Business.Domain.Services
+namespace Business.Domain.Services;
+
+public interface ICategoryService : IBaseService<CategoryResource, CreateCategoryResource, UpdateCategoryResource, Category>
 {
-    public interface ICategoryService : IBaseService<CategoryResource, CreateCategoryResource, UpdateCategoryResource, Category>
-    {
-        Task<PaginationResponse<IEnumerable<CategoryResource>>> GetPaginationAsync(QueryResource pagination, FilterCategoryResource filterResource);
-    }
+    Task<PaginationResult<IEnumerable<CategoryResource>>> GetPaginationAsync(QueryResource pagination, FilterCategoryResource filterResource);
 }

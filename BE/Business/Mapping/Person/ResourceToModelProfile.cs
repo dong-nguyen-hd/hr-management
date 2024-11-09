@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Business.Data;
 using Business.Extensions;
-using Business.Resources.Person;
+using Business.Resources.DTOs.Person;
+using Business.Resources.Enums;
 
-namespace Business.Mapping.Person
+namespace Business.Mapping.Person;
+
+public class ResourceToModelProfile : Profile
 {
-    public class ResourceToModelProfile : Profile
+    public ResourceToModelProfile()
     {
-        public ResourceToModelProfile()
-        {
             CreateMap<CreatePersonResource, Domain.Models.Person>()
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(src => src.FirstName.RemoveSpaceCharacter()))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(src => src.LastName.RemoveSpaceCharacter()))
@@ -35,12 +35,12 @@ namespace Business.Mapping.Person
                 .ForMember(x => x.Phone, opt => opt.MapFrom(src => src.Phone.RemoveSpaceCharacter()));
         }
 
-        /// <summary>
-        /// You should rewrite this method, rely on Id of person in DB
-        /// </summary>
-        /// <returns></returns>
-        private string ComputeStaffId()
-        {
+    /// <summary>
+    /// You should rewrite this method, rely on Id of person in DB
+    /// </summary>
+    /// <returns></returns>
+    private string ComputeStaffId()
+    {
             DateTime tempDate = DateTime.Now;
             string tempMonth = tempDate.Month < 10 ? $"0{tempDate.Month}" : $"{tempDate.Month}";
             string tempDay = tempDate.Day < 10 ? $"0{tempDate.Day}" : $"{tempDate.Day}";
@@ -50,5 +50,4 @@ namespace Business.Mapping.Person
 
             return string.Format($"{tempDate.Year}{tempMonth}{tempDay}{lastDigit}");
         }
-    }
 }

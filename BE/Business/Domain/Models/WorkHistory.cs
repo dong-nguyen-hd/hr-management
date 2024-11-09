@@ -1,15 +1,17 @@
-﻿namespace Business.Domain.Models
+﻿using Business.Domain.Models.Base;
+using Business.Extensions;
+
+namespace Business.Domain.Models;
+
+public class WorkHistory : BaseModel
 {
-    public class WorkHistory
-    {
-        public int Id { get; set; }
-        public string Position { get; set; }
-        public string CompanyName { get; set; }
-        public int OrderIndex { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-        public int PersonId { get; set; }
-        public Person Person { get; set; }
-    }
+    public string Id { get; set; } = RelateText.GenId();
+    public string Position { get; set; } = null!;
+    public string CompanyName { get; set; }  = null!;
+    public int OrderIndex { get; set; }
+    public DateOnly StartDate { get; set; }
+    public DateOnly? EndDate { get; set; }
+    
+    public string PersonId { get; set; }
+    public Person Person { get; set; }
 }
