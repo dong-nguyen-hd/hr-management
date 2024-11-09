@@ -11,9 +11,14 @@ public class CategoryConfig : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> entity)
     {
-            entity.ToTable("Category");
-            entity.Property(x => x.Name).IsRequired().HasColumnType("nvarchar(500)");
-            entity.HasIndex(x => x.Name);
-            entity.HasQueryFilter(x => !x.IsDeleted);
-        }
+        entity.ToTable("tbl_category");
+
+        entity.Property(x => x.CreatedDatetimeUtc).HasColumnType("timestamp without time zone");
+        entity.Property(x => x.UpdatedDatetimeUtc).HasColumnType("timestamp without time zone");
+
+        entity.HasKey(x => x.Id);
+        entity.HasQueryFilter(x => x.Active);
+
+        entity.HasIndex(x => new { x.Name, x.Active });
+    }
 }

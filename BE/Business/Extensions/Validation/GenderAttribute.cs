@@ -9,7 +9,7 @@ public class GenderAttribute : ValidationAttribute
     {
             try
             {
-                if (Enum.IsDefined(typeof(eGender), value))
+                if (Enum.IsDefined(typeof(Gender), value))
                     return ValidationResult.Success;
                 else
                     return new ValidationResult("Invalid Gender field.");

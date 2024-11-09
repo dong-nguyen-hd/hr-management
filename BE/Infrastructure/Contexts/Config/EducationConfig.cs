@@ -11,12 +11,14 @@ public class EducationConfig : IEntityTypeConfiguration<Education>
 {
     public void Configure(EntityTypeBuilder<Education> entity)
     {
-            entity.ToTable("Education");
-            entity.Property(x => x.CollegeName).IsRequired().HasColumnType("nvarchar(500)");
-            entity.Property(x => x.Major).IsRequired().HasColumnType("nvarchar(500)");
-            entity.Property(x => x.StartDate).IsRequired().HasColumnType("date");
-            entity.Property(x => x.EndDate).HasColumnType("date");
-            entity.HasIndex(x => x.CollegeName);
-            entity.HasQueryFilter(x => !x.IsDeleted);
-        }
+        entity.ToTable("tbl_education");
+        
+        entity.Property(x => x.CreatedDatetimeUtc).HasColumnType("timestamp without time zone");
+        entity.Property(x => x.UpdatedDatetimeUtc).HasColumnType("timestamp without time zone");
+
+        entity.HasKey(x => x.Id);
+        entity.HasQueryFilter(x => x.Active);
+
+        entity.HasIndex(x => new { x.CollegeName, x.Active });
+    }
 }

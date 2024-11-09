@@ -1,4 +1,5 @@
 ﻿using Business.Domain.Models.Base;
+using Business.Extensions;
 
 namespace Business.Domain.Models;
 
@@ -15,6 +16,6 @@ public class Pay : BaseModel
     public float HealthInsurance { get; set; }
     public DateTime Date { get; set; }
     public bool IsDeleted { get; set; }
-    public int PersonId { get; set; }
+    public string PersonId { get; set; }
     public Person Person { get; set; }
 }

@@ -1,16 +1,17 @@
 ﻿using Business.Domain.Models.Base;
+using Business.Extensions;
 
 namespace Business.Domain.Models;
 
 public class Certificate : BaseModel
 {
     public string Id { get; set; } = RelateText.GenId();
-    public string Name { get; set; }
-    public string Provider { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
+    public string Name { get; set; } = null!;
+    public string Provider { get; set; } = null!;
+    public DateOnly StartDate { get; set; }
+    public DateOnly? EndDate { get; set; }
     public int OrderIndex { get; set; }
-    public bool IsDeleted { get; set; }
-    public int PersonId { get; set; }
+
+    public string PersonId { get; set; }
     public Person Person { get; set; }
 }

@@ -34,7 +34,7 @@ public class UpdatePersonResource
 
     [Required]
     [Gender]
-    public eGender Gender { get; set; }
+    public Gender Gender { get; set; }
 
     [Required]
     [Display(Name = "Position Id")]

@@ -11,12 +11,14 @@ public class CertificateConfig : IEntityTypeConfiguration<Certificate>
 {
     public void Configure(EntityTypeBuilder<Certificate> entity)
     {
-            entity.ToTable("Certificate");
-            entity.Property(x => x.Name).IsRequired().HasColumnType("nvarchar(500)");
-            entity.Property(x => x.Provider).IsRequired().HasColumnType("nvarchar(500)");
-            entity.Property(x => x.StartDate).IsRequired().HasColumnType("date");
-            entity.Property(x => x.EndDate).HasColumnType("date");
-            entity.HasIndex(x => x.Name);
-            entity.HasQueryFilter(x => !x.IsDeleted);
-        }
+        entity.ToTable("tbl_certificate");
+
+        entity.Property(x => x.CreatedDatetimeUtc).HasColumnType("timestamp without time zone");
+        entity.Property(x => x.UpdatedDatetimeUtc).HasColumnType("timestamp without time zone");
+
+        entity.HasKey(x => x.Id);
+        entity.HasQueryFilter(x => x.Active);
+
+        entity.HasIndex(x => new { x.Name, x.Active });
+    }
 }

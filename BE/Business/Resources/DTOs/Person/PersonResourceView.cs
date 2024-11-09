@@ -47,7 +47,7 @@ public class PersonResourceView
 
     [Required]
     [Gender]
-    public eGender Gender { get; set; }
+    public Gender Gender { get; set; }
 
     [Required]
     [MaxLength(500)]

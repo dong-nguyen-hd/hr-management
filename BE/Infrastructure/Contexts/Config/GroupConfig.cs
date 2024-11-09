@@ -11,13 +11,14 @@ public class GroupConfig : IEntityTypeConfiguration<Group>
 {
     public void Configure(EntityTypeBuilder<Group> entity)
     {
-            entity.ToTable("Group");
-            entity.Property(x => x.Name).IsRequired().HasColumnType("nvarchar(500)");
-            entity.Property(x => x.Description).IsRequired().HasColumnType("nvarchar(500)");
-            entity.Property(x => x.Technologies).IsRequired().HasColumnType("varchar(500)");
-            entity.Property(x => x.StartDate).IsRequired().HasColumnType("date");
-            entity.Property(x => x.EndDate).HasColumnType("date");
-            entity.HasIndex(x => x.Name);
-            entity.HasQueryFilter(x => !x.IsDeleted);
-        }
+        entity.ToTable("tbl_group");
+
+        entity.Property(x => x.CreatedDatetimeUtc).HasColumnType("timestamp without time zone");
+        entity.Property(x => x.UpdatedDatetimeUtc).HasColumnType("timestamp without time zone");
+
+        entity.HasKey(x => x.Id);
+        entity.HasQueryFilter(x => x.Active);
+
+        entity.HasIndex(x => new { x.Name, x.Active });
+    }
 }
