@@ -5,14 +5,11 @@ using Microsoft.Extensions.Options;
 
 namespace API.Services;
 
-public class WorkHistoryService : BaseService<WorkHistoryResource, CreateWorkHistoryResource, UpdateWorkHistoryResource, WorkHistory>, IWorkHistoryService
+public class WorkHistoryService(IMapper mapper, CoreContext context) : BaseService, IWorkHistoryService
 {
-    #region Constructor
-    public WorkHistoryService(IWorkHistoryRepository workHistoryRepository,
-        IMapper mapper,
-        IUnitOfWork unitOfWork,
-        IOptionsMonitor<ResponseMessage> responseMessage) : base(workHistoryRepository, mapper, unitOfWork, responseMessage)
-    {
-        }
+    #region Method
+
+    public async Task<BaseResult<MasterDataResponse>> GetMasterDataAsync(bool hasPopularity, CancellationToken cancellationToken = default)
+
     #endregion
 }

@@ -9,3 +9,4 @@ global using System.Security.Claims;
 global using Model = API.Domain.Models;
 global using MyEnum = API.Resources.Enums;
 global using API.Domain.Contexts;
+global using API.Extensions;

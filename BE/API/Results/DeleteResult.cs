@@ -1,35 +1,35 @@
-﻿namespace API.Results;
+﻿using API.Resources.SystemData;
 
-public class DeleteResult<T> : BaseResult<T>
+namespace API.Results;
+
+public record DeleteResult<T> : BaseResult<T>
 {
     #region Properties
 
     [JsonPropertyName("totalRequest")]
-    public int TotalRequest { get; set; }
+    public int? TotalRequest { get; set; }
 
     [JsonPropertyName("totalDeleted")]
-    public int TotalDeleted { get; set; }
+    public int? TotalDeleted { get; set; }
 
     #endregion
 
     #region Constructor
 
-    public DeleteResult(int totalRequest, int TotalDeleted, T resource) : base(resource)
+    public DeleteResult() : base()
+    {
+    }
+
+    public DeleteResult(int totalRequest, int totalDeleted) : base()
     {
         this.TotalRequest = totalRequest;
-        this.TotalDeleted = TotalDeleted;
+        this.TotalDeleted = totalDeleted;
     }
 
-    public DeleteResult(string message) : base(message)
+    public DeleteResult(int totalRequest, int totalDeleted, CodeMessage codeMessage, string? message = "") : base(codeMessage, message)
     {
-    }
-
-    public DeleteResult(List<string> messages) : base(messages)
-    {
-    }
-
-    public DeleteResult(bool isSuccess) : base(isSuccess)
-    {
+        this.TotalRequest = totalRequest;
+        this.TotalDeleted = totalDeleted;
     }
 
     #endregion

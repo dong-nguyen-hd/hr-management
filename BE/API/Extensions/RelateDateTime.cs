@@ -6,6 +6,16 @@ namespace API.Extensions;
 
 public static class RelateDateTime
 {
+    public static DateTime? ConvertToDatetime(this DateOnly? dateOnly) =>
+        dateOnly?.ToDateTime(new(0));
+
+    public static DateTime ConvertToDatetime(this DateOnly dateOnly) => dateOnly.ToDateTime(new(0));
+
+    public static DateOnly? ConvertToDateonly(this DateTime? datetime) =>
+        datetime != null ? DateOnly.FromDateTime(datetime.Value) : null;
+
+    public static DateOnly ConvertToDateonly(this DateTime datetime) => DateOnly.FromDateTime(datetime);
+
     public static DateTime? ConvertToDatetimeWithOffset(this DateTime? utc, string? rawOffset)
     {
         // Validate
@@ -32,20 +42,9 @@ public static class RelateDateTime
         }
     }
 
-    /// <summary>
-    /// Chức năng: chuyển đổi DateTime về string theo định dạng hệ thống quy định
-    /// </summary>
-    /// <param name="data"></param>
-    /// <returns></returns>
     public static string ConvertToSystemFormat(this DateTime data)
         => data.ToString(SystemConstant.SystemFormatDatetime);
 
-    /// <summary>
-    /// Chức năng: chuyển đổi kiểu dữ liệu string về Datetime theo format quy định
-    /// </summary>
-    /// <param name="source"></param>
-    /// <param name="format"></param>
-    /// <returns></returns>
     public static DateTime? ConvertStringToDatetime(this string? source, string? format) =>
         DateTime.TryParseExact(source ?? throw new ArgumentException(nameof(source)), format ?? throw new ArgumentException(nameof(format)),
             CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDatetime)

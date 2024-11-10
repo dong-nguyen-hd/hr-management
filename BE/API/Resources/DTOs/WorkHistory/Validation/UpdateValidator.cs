@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace API.Resources.DTOs.WorkHistory.Validation;
 
-public class CreateValidator : AbstractValidator<CreateRequest>
+public class UpdateValidator : AbstractValidator<UpdateRequest>
 {
-    public CreateValidator()
+    public UpdateValidator()
     {
         RuleFor(x => x.CompanyName)
             .NotEmpty()
