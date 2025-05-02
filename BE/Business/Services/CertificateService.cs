@@ -6,17 +6,16 @@ using Business.Resources;
 using Business.Resources.Certificate;
 using Microsoft.Extensions.Options;
 
-namespace Business.Services
+namespace Business.Services;
+
+public class CertificateService : BaseService<CertificateResource, CreateCertificateResource, UpdateCertificateResource, Certificate>, ICertificateService
 {
-    public class CertificateService : BaseService<CertificateResource, CreateCertificateResource, UpdateCertificateResource, Certificate>, ICertificateService
+    #region Constructor
+    public CertificateService(ICertificateRepository certificateRepository,
+        IMapper mapper,
+        IUnitOfWork unitOfWork,
+        IOptionsMonitor<ResponseMessage> responseMessage) : base(certificateRepository, mapper, unitOfWork, responseMessage)
     {
-        #region Constructor
-        public CertificateService(ICertificateRepository certificateRepository,
-            IMapper mapper,
-            IUnitOfWork unitOfWork,
-            IOptionsMonitor<ResponseMessage> responseMessage) : base(certificateRepository, mapper, unitOfWork, responseMessage)
-        {
         }
-        #endregion
-    }
+    #endregion
 }

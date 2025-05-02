@@ -6,17 +6,16 @@ using Business.Resources;
 using Business.Resources.WorkHistory;
 using Microsoft.Extensions.Options;
 
-namespace Business.Services
+namespace Business.Services;
+
+public class WorkHistoryService : BaseService<WorkHistoryResource, CreateWorkHistoryResource, UpdateWorkHistoryResource, WorkHistory>, IWorkHistoryService
 {
-    public class WorkHistoryService : BaseService<WorkHistoryResource, CreateWorkHistoryResource, UpdateWorkHistoryResource, WorkHistory>, IWorkHistoryService
+    #region Constructor
+    public WorkHistoryService(IWorkHistoryRepository workHistoryRepository,
+        IMapper mapper,
+        IUnitOfWork unitOfWork,
+        IOptionsMonitor<ResponseMessage> responseMessage) : base(workHistoryRepository, mapper, unitOfWork, responseMessage)
     {
-        #region Constructor
-        public WorkHistoryService(IWorkHistoryRepository workHistoryRepository,
-            IMapper mapper,
-            IUnitOfWork unitOfWork,
-            IOptionsMonitor<ResponseMessage> responseMessage) : base(workHistoryRepository, mapper, unitOfWork, responseMessage)
-        {
         }
-        #endregion
-    }
+    #endregion
 }

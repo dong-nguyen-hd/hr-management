@@ -1,13 +1,13 @@
 ﻿using Business.Resources.Technology;
 
-namespace Business.Extensions
-{
-    static public class RelateElementOfList
-    {
-        public static List<T> RemoveDuplicate<T>(this List<T> source) => new HashSet<T>(source).ToList();
+namespace Business.Extensions;
 
-        public static List<TechnologyResource> IntersectTechnology(this IEnumerable<TechnologyResource> total, string technologies)
-        {
+static public class RelateElementOfList
+{
+    public static List<T> RemoveDuplicate<T>(this List<T> source) => new HashSet<T>(source).ToList();
+
+    public static List<TechnologyResource> IntersectTechnology(this IEnumerable<TechnologyResource> total, string technologies)
+    {
             string[] arrTechnologies = technologies.Split(',');
             List<TechnologyResource> listTechnologyResource = new List<TechnologyResource>(arrTechnologies.Length);
 
@@ -18,5 +18,4 @@ namespace Business.Extensions
 
             return listTechnologyResource;
         }
-    }
 }

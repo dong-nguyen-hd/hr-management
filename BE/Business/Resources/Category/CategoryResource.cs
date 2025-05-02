@@ -1,17 +1,16 @@
 ﻿using Business.Resources.Technology;
 using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.Category
+namespace Business.Resources.Category;
+
+public class CategoryResource
 {
-    public class CategoryResource
-    {
-        [Required]
-        public int Id { get; set; }
+    [Required]
+    public int Id { get; set; }
 
-        [Required]
-        [MaxLength(250)]
-        public string Name { get; set; }
+    [Required]
+    [MaxLength(250)]
+    public string Name { get; set; }
 
-        public List<TechnologyResource> Technologies { get; set; }
-    }
+    public List<TechnologyResource> Technologies { get; set; }
 }

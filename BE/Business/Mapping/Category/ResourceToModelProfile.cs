@@ -2,12 +2,12 @@
 using Business.Extensions;
 using Business.Resources.Category;
 
-namespace Business.Mapping.Category
+namespace Business.Mapping.Category;
+
+public class ResourceToModelProfile : Profile
 {
-    public class ResourceToModelProfile : Profile
+    public ResourceToModelProfile()
     {
-        public ResourceToModelProfile()
-        {
             CreateMap<CreateCategoryResource, Domain.Models.Category>()
                 .ForMember(x => x.Technologies, opt => opt.MapFrom(src => src.Technologies))
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Name.RemoveSpaceCharacter()));
@@ -16,5 +16,4 @@ namespace Business.Mapping.Category
                 .ForMember(x => x.Technologies, opt => opt.MapFrom(src => src.Technologies))
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Name.RemoveSpaceCharacter()));
         }
-    }
 }

@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.Group
+namespace Business.Resources.Group;
+
+public class FilterGroupResource
 {
-    public class FilterGroupResource
-    {
-        [MaxLength(25)]
-        public string Name { get; set; }
+    [MaxLength(25)]
+    public string Name { get; set; }
 
-        public bool Available { get; set; }
+    public bool Available { get; set; }
 
-        [Display(Name = "Last Day")]
-        public DateTime? LastDay { get; set; }
-    }
+    [Display(Name = "Last Day")]
+    public DateTime? LastDay { get; set; }
 }

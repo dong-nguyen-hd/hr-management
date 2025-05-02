@@ -1,9 +1,8 @@
 ﻿using Business.Domain.Models;
 
-namespace Business.Domain.Repositories
+namespace Business.Domain.Repositories;
+
+public interface IEducationRepository : IBaseRepository<Education>
 {
-    public interface IEducationRepository : IBaseRepository<Education>
-    {
         
-    }
 }

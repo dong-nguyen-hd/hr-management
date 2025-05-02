@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.Technology
+namespace Business.Resources.Technology;
+
+public class UpdateTechnologyResource
 {
-    public class UpdateTechnologyResource
-    {
-        [Required]
-        [MaxLength(250)]
-        [MinLength(1)]
-        public string Name { get; set; }
-    }
+    [Required]
+    [MaxLength(250)]
+    [MinLength(1)]
+    public string Name { get; set; }
 }

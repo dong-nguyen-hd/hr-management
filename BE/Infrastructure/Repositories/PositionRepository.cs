@@ -3,17 +3,17 @@ using Business.Domain.Repositories;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
-{
-    public class PositionRepository : BaseRepository<Position>, IPositionRepository
-    {
-        #region Constructor
-        public PositionRepository(AppDbContext context) : base(context) { }
-        #endregion
+namespace Infrastructure.Repositories;
 
-        #region Method
-        public async Task<List<Position>> FindByNameAsync(string filterName, bool absolute = false)
-        {
+public class PositionRepository : BaseRepository<Position>, IPositionRepository
+{
+    #region Constructor
+    public PositionRepository(AppDbContext context) : base(context) { }
+    #endregion
+
+    #region Method
+    public async Task<List<Position>> FindByNameAsync(string filterName, bool absolute = false)
+    {
             var queryable = Context.Positions.AsQueryable();
 
             if (!string.IsNullOrEmpty(filterName) && !absolute)
@@ -28,6 +28,5 @@ namespace Infrastructure.Repositories
                 .Take(5)
                 .ToListAsync();
         }
-        #endregion
-    }
+    #endregion
 }

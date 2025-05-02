@@ -1,15 +1,15 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Business.Extensions
-{
-    public static class RelateText
-    {
-        public static string RemoveSpaceCharacter(this string source)
-            => Regex.Replace(source.Trim(), @"\s{2,}", " ");
+namespace Business.Extensions;
 
-        public static string ConcatenateWithComma(this List<int> source)
-        {
+public static class RelateText
+{
+    public static string RemoveSpaceCharacter(this string source)
+        => Regex.Replace(source.Trim(), @"\s{2,}", " ");
+
+    public static string ConcatenateWithComma(this List<int> source)
+    {
             int countOfList = source.Count;
             StringBuilder text = new StringBuilder();
 
@@ -26,5 +26,4 @@ namespace Business.Extensions
 
             return text.ToString();
         }
-    }
 }

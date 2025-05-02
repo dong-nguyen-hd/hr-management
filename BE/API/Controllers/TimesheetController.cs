@@ -8,34 +8,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Serilog;
 
-namespace API.Controllers
-{
-    [ApiController]
-    [Route("api/v1/timesheet")]
-    public class TimesheetController : ControllerBase
-    {
-        #region Property
-        private readonly ITimesheetService _timesheetService;
-        protected readonly ResponseMessage ResponseMessage;
-        #endregion
+namespace API.Controllers;
 
-        #region Constructor
-        public TimesheetController(ITimesheetService timesheetService,
-            IOptionsMonitor<ResponseMessage> responseMessage)
-        {
+[ApiController]
+[Route("api/v1/timesheet")]
+public class TimesheetController : ControllerBase
+{
+    #region Property
+    private readonly ITimesheetService _timesheetService;
+    protected readonly ResponseMessage ResponseMessage;
+    #endregion
+
+    #region Constructor
+    public TimesheetController(ITimesheetService timesheetService,
+        IOptionsMonitor<ResponseMessage> responseMessage)
+    {
             this._timesheetService = timesheetService;
             this.ResponseMessage = responseMessage.CurrentValue;
         }
-        #endregion
+    #endregion
 
-        #region Action
-        [HttpPost("import")]
-        //[Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}")]
-        [AllowAnonymous]
-        [ProducesResponseType(typeof(BaseResponse<>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ImportAsync([FromForm] IFormFile file)
-        {
+    #region Action
+    [HttpPost("import")]
+    //[Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(BaseResponse<>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ImportAsync(IFormFile file)
+    {
             // Validate file import
             var validateResult = ValidateTimesheet(file);
             if (!validateResult.isSuccess) return BadRequest(validateResult.result);
@@ -59,12 +59,12 @@ namespace API.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet()]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorKT}")]
-        [ProducesResponseType(typeof(BaseResponse<TimesheetResource>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<TimesheetResource>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetTimesheetByPersonIdAsync(int personId, DateTime date)
-        {
+    [HttpGet()]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorKT}")]
+    [ProducesResponseType(typeof(BaseResponse<TimesheetResource>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<TimesheetResource>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetTimesheetByPersonIdAsync(int personId, DateTime date)
+    {
             Log.Information($"{User.Identity?.Name}: get a timesheet by person-id-{personId} data.");
 
             var result = await _timesheetService.GetTimesheetByPersonIdAsync(personId, date);
@@ -74,11 +74,11 @@ namespace API.Controllers
 
             return Ok(result);
         }
-        #endregion
+    #endregion
 
-        #region Private work
-        private (bool isSuccess, BaseResponse<object> result) ValidateTimesheet(IFormFile file)
-        {
+    #region Private work
+    private (bool isSuccess, BaseResponse<object> result) ValidateTimesheet(IFormFile file)
+    {
             if (file == null || file.Length <= 0)
                 return (false, new BaseResponse<object>(ResponseMessage.Values["File_Empty"]));
 
@@ -87,6 +87,5 @@ namespace API.Controllers
 
             return (true, new BaseResponse<object>(true));
         }
-        #endregion
-    }
+    #endregion
 }

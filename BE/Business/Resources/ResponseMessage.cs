@@ -1,9 +1,8 @@
-﻿namespace Business.Resources
+﻿namespace Business.Resources;
+
+public sealed class ResponseMessage
 {
-    public sealed class ResponseMessage
-    {
-        #region Property
-        public Dictionary<string, string> Values { get; set; }
-        #endregion
-    }
+    #region Property
+    public Dictionary<string, string> Values { get; set; }
+    #endregion
 }

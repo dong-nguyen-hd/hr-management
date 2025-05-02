@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.Department
+namespace Business.Resources.Department;
+
+public class UpdateDepartmentResource
 {
-    public class UpdateDepartmentResource
-    {
-        [Required]
-        [MaxLength(250)]
-        public string Name { get; set; }
-    }
+    [Required]
+    [MaxLength(250)]
+    public string Name { get; set; }
 }

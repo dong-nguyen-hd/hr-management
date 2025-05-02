@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace Business.Extensions.Validation
+namespace Business.Extensions.Validation;
+
+public class PasswordAttribute : ValidationAttribute
 {
-    public class PasswordAttribute : ValidationAttribute
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
             try
             {
                 string source = value.ToString();
@@ -22,5 +22,4 @@ namespace Business.Extensions.Validation
                 return new ValidationResult("Password must MD5 format.");
             }
         }
-    }
 }

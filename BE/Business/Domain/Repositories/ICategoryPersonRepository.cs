@@ -1,9 +1,8 @@
 ﻿using Business.Domain.Models;
 
-namespace Business.Domain.Repositories
+namespace Business.Domain.Repositories;
+
+public interface ICategoryPersonRepository : IBaseRepository<CategoryPerson>
 {
-    public interface ICategoryPersonRepository : IBaseRepository<CategoryPerson>
-    {
-        Task<bool> ValidateExistent(int personId, int categoryId);
-    }
+    Task<bool> ValidateExistent(int personId, int categoryId);
 }

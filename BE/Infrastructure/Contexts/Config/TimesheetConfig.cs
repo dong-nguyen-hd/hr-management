@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Contexts.Config
+namespace Infrastructure.Contexts.Config;
+
+/// <summary>
+/// Setting schema for Timesheet table
+/// </summary>
+public class TimesheetConfig : IEntityTypeConfiguration<Timesheet>
 {
-    /// <summary>
-    /// Setting schema for Timesheet table
-    /// </summary>
-    public class TimesheetConfig : IEntityTypeConfiguration<Timesheet>
+    public void Configure(EntityTypeBuilder<Timesheet> entity)
     {
-        public void Configure(EntityTypeBuilder<Timesheet> entity)
-        {
             entity.ToTable("Timesheet");
             entity.Property(x => x.TotalWorkDay).HasColumnType("decimal(3,1)");
             entity.Property(x => x.WorkDay).HasColumnType("decimal(3,1)");
@@ -23,5 +23,4 @@ namespace Infrastructure.Contexts.Config
             entity.HasIndex(x => x.Date);
             entity.HasQueryFilter(x => !x.IsDeleted);
         }
-    }
 }

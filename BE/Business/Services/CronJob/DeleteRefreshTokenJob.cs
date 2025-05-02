@@ -4,25 +4,25 @@ using Business.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-namespace Business.Services.CronJob
-{
-    public class DeleteRefreshTokenJob : CronJobService
-    {
-        #region Property
-        private readonly IServiceProvider _serviceProvider;
-        #endregion
+namespace Business.Services.CronJob;
 
-        #region Constructor
-        public DeleteRefreshTokenJob(IServiceProvider serviceProvider,
-            IScheduleConfig<DeleteRefreshTokenJob> config) : base(config.CronExpression, config.TimeZoneInfo)
-        {
+public class DeleteRefreshTokenJob : CronJobService
+{
+    #region Property
+    private readonly IServiceProvider _serviceProvider;
+    #endregion
+
+    #region Constructor
+    public DeleteRefreshTokenJob(IServiceProvider serviceProvider,
+        IScheduleConfig<DeleteRefreshTokenJob> config) : base(config.CronExpression, config.TimeZoneInfo)
+    {
             this._serviceProvider = serviceProvider;
         }
-        #endregion
+    #endregion
 
-        #region Method
-        public override async Task DoWorkAsync(CancellationToken cancellationToken)
-        {
+    #region Method
+    public override async Task DoWorkAsync(CancellationToken cancellationToken)
+    {
             try
             {
                 Log.Information("DeleteRefreshTokenJob is working.");
@@ -40,20 +40,20 @@ namespace Business.Services.CronJob
             }
         }
 
-        public override Task StartAsync(CancellationToken cancellationToken)
-        {
+    public override Task StartAsync(CancellationToken cancellationToken)
+    {
             Log.Information("DeleteRefreshTokenJob is starting.");
             return base.StartAsync(cancellationToken);
         }
 
-        public override Task StopAsync(CancellationToken cancellationToken)
-        {
+    public override Task StopAsync(CancellationToken cancellationToken)
+    {
             Log.Information("DeleteRefreshTokenJob is stopping.");
             return base.StopAsync(cancellationToken);
         }
 
-        private async Task DeleteExpiredTokenAsync(ITokenRepository tokenRepository, IUnitOfWork unitOfWork)
-        {
+    private async Task DeleteExpiredTokenAsync(ITokenRepository tokenRepository, IUnitOfWork unitOfWork)
+    {
             var now = DateTime.UtcNow;
 
             var tempTokens = await tokenRepository.FindAsync(x => DateTime.Compare(x.ExpireTime, now) < 0 || x.IsUsed);
@@ -62,6 +62,5 @@ namespace Business.Services.CronJob
 
             await unitOfWork.CompleteAsync();
         }
-        #endregion
-    }
+    #endregion
 }

@@ -1,13 +1,13 @@
 ﻿using Infrastructure.Contexts;
 
-namespace UnitTest.Tool
-{
-    public class AppDbContextTests : TestWithSqlite<AppDbContext>
-    {
+namespace UnitTest.Tool;
 
-        [Fact]
-        public void CanConnect_ReturnTrue_AppDbContext()
-        {
+public class AppDbContextTests : TestWithSqlite<AppDbContext>
+{
+
+    [Fact]
+    public void CanConnect_ReturnTrue_AppDbContext()
+    {
             // Arrange
             using var context = new AppDbContext(Options);
             context.Database.EnsureCreated();
@@ -18,5 +18,4 @@ namespace UnitTest.Tool
             // Assert
             Assert.True(result);
         }
-    }
 }

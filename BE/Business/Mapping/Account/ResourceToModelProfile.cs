@@ -3,12 +3,12 @@ using Business.Data;
 using Business.Extensions;
 using Business.Resources.Account;
 
-namespace Business.Mapping.Account
+namespace Business.Mapping.Account;
+
+public class ResourceToModelProfile : Profile
 {
-    public class ResourceToModelProfile : Profile
+    public ResourceToModelProfile()
     {
-        public ResourceToModelProfile()
-        {
             CreateMap<CreateAccountResource, Domain.Models.Account>()
                 .ForMember(x => x.UserName, opt => opt.MapFrom(src => src.UserName.ToLower()))
                 .ForMember(x => x.Password, opt => opt.MapFrom(src => src.Password.ToLower().HashingPassword(Constant.IterationCount)))
@@ -29,13 +29,12 @@ namespace Business.Mapping.Account
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Name.RemoveSpaceCharacter()));
         }
 
-        #region Private work
-        private static string GetRole(int @enum)
-        {
+    #region Private work
+    private static string GetRole(int @enum)
+    {
             eRole roleEnum = (eRole)@enum;
 
             return roleEnum.ToDescriptionString();
         }
-        #endregion
-    }
+    #endregion
 }

@@ -6,13 +6,13 @@ using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using UnitTest.Tool;
 
-namespace UnitTest.RepositoriesTests
+namespace UnitTest.RepositoriesTests;
+
+public class AccountRepositoryTests : TestWithSqlite<AppDbContext>
 {
-    public class AccountRepositoryTests : TestWithSqlite<AppDbContext>
+    #region Private work
+    private static void SeedDatabaseThreeAccount(AppDbContext context)
     {
-        #region Private work
-        private static void SeedDatabaseThreeAccount(AppDbContext context)
-        {
             context.Accounts.AddRange(
                 new Account
                 {
@@ -56,12 +56,12 @@ namespace UnitTest.RepositoriesTests
             );
             context.SaveChanges();
         }
-        #endregion
+    #endregion
 
-        #region Test
-        [Fact]
-        public async Task GetWithPrimaryKeyAsync_WithThreeIds_ShouldEqual()
-        {
+    #region Test
+    [Fact]
+    public async Task GetWithPrimaryKeyAsync_WithThreeIds_ShouldEqual()
+    {
             // Arrange
             using var context = new AppDbContext(Options);
             context.Database.EnsureCreated();
@@ -77,9 +77,9 @@ namespace UnitTest.RepositoriesTests
             Assert.Equal(Enumerable.Count(result), ids.Count);
         }
 
-        [Fact]
-        public void RemoveRange_ShouldNotEqual()
-        {
+    [Fact]
+    public void RemoveRange_ShouldNotEqual()
+    {
             // Arrange
             using var context = new AppDbContext(Options);
             context.Database.EnsureCreated();
@@ -98,9 +98,9 @@ namespace UnitTest.RepositoriesTests
             Assert.NotEqual(accountDeleted, listAccount);
         }
 
-        [Fact]
-        public void ValidateCredentialsAsync_ShouldEqual()
-        {
+    [Fact]
+    public void ValidateCredentialsAsync_ShouldEqual()
+    {
             // Arrange
             using var context = new AppDbContext(Options);
             context.Database.EnsureCreated();
@@ -116,9 +116,9 @@ namespace UnitTest.RepositoriesTests
             Assert.Equal("admin1", account.UserName);
         }
 
-        [Fact]
-        public void ValidateUserNameAsync_ShouldInvalid()
-        {
+    [Fact]
+    public void ValidateUserNameAsync_ShouldInvalid()
+    {
             // Arrange
             using var context = new AppDbContext(Options);
             context.Database.EnsureCreated();
@@ -132,6 +132,5 @@ namespace UnitTest.RepositoriesTests
             // Assert
             Assert.False(isValid);
         }
-        #endregion
-    }
+    #endregion
 }

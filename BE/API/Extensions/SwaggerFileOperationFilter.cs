@@ -1,12 +1,12 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace API.Extensions
+namespace API.Extensions;
+
+public class SwaggerFileOperationFilter : IOperationFilter
 {
-    public class SwaggerFileOperationFilter : IOperationFilter
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
             var fileUploadMime = "multipart/form-data";
             if (operation.RequestBody == null || !operation.RequestBody.Content.Any(x => x.Key.Equals(fileUploadMime, StringComparison.InvariantCultureIgnoreCase)))
                 return;
@@ -20,5 +20,4 @@ namespace API.Extensions
                     Format = "binary"
                 });
         }
-    }
 }

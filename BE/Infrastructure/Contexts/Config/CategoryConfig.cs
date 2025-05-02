@@ -2,19 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Contexts.Config
+namespace Infrastructure.Contexts.Config;
+
+/// <summary>
+/// Setting schema for Category table
+/// </summary>
+public class CategoryConfig : IEntityTypeConfiguration<Category>
 {
-    /// <summary>
-    /// Setting schema for Category table
-    /// </summary>
-    public class CategoryConfig : IEntityTypeConfiguration<Category>
+    public void Configure(EntityTypeBuilder<Category> entity)
     {
-        public void Configure(EntityTypeBuilder<Category> entity)
-        {
             entity.ToTable("Category");
             entity.Property(x => x.Name).IsRequired().HasColumnType("nvarchar(500)");
             entity.HasIndex(x => x.Name);
             entity.HasQueryFilter(x => !x.IsDeleted);
         }
-    }
 }

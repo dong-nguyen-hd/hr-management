@@ -1,8 +1,7 @@
 ﻿using Business.Domain.Models;
 
-namespace Business.Domain.Repositories
+namespace Business.Domain.Repositories;
+
+public interface ICertificateRepository : IBaseRepository<Certificate>
 {
-    public interface ICertificateRepository : IBaseRepository<Certificate>
-    {
-    }
 }

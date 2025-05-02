@@ -1,14 +1,14 @@
 ﻿using Business.Communication;
 using Business.Resources;
 
-namespace Business.Extensions
+namespace Business.Extensions;
+
+public static class RelatePagination
 {
-    public static class RelatePagination
+    public static void CreatePaginationResponse<Response, Pagination>(this PaginationResponse<Response> response,
+        Pagination pagination,
+        int totalRecords) where Pagination : QueryResource
     {
-        public static void CreatePaginationResponse<Response, Pagination>(this PaginationResponse<Response> response,
-            Pagination pagination,
-            int totalRecords) where Pagination : QueryResource
-        {
             // Assign Query-Resource
             response.Page = pagination.Page;
             response.PageSize = pagination.PageSize;
@@ -28,5 +28,4 @@ namespace Business.Extensions
             // Assign Total-Records
             response.TotalRecords = totalRecords;
         }
-    }
 }

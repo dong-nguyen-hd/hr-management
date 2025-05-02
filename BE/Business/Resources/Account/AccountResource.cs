@@ -1,23 +1,22 @@
 ﻿using Business.Resources.Group;
 using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.Account
+namespace Business.Resources.Account;
+
+public class AccountResource
 {
-    public class AccountResource
-    {
-        public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Role { get; set; }
-        public AvatarResource Avatar { get; set; }
+    public int Id { get; set; }
+    public string UserName { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Role { get; set; }
+    public AvatarResource Avatar { get; set; }
 
-        [Display(Name = "Created At")]
-        public DateTime CreatedAt { get; set; }
+    [Display(Name = "Created At")]
+    public DateTime CreatedAt { get; set; }
 
-        [Display(Name = "Last Activity")]
-        public DateTime LastActivity { get; set; }
+    [Display(Name = "Last Activity")]
+    public DateTime LastActivity { get; set; }
 
-        public List<GroupResource> Groups { get; set; }
-    }
+    public List<GroupResource> Groups { get; set; }
 }

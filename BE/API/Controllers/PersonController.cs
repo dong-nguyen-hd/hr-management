@@ -10,34 +10,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Serilog;
 
-namespace API.Controllers
-{
-    [Route("api/v1/person")]
-    public class PersonController : DongNguyenController<PersonResource, CreatePersonResource, UpdatePersonResource, Person>
-    {
-        #region Property
-        private readonly IPersonService _personService;
-        private readonly IImageService _imageService;
-        #endregion
+namespace API.Controllers;
 
-        #region Constructor
-        public PersonController(IPersonService personService,
-            IImageService imageService,
-            IMapper mapper,
-            IOptionsMonitor<ResponseMessage> responseMessage) : base(personService, mapper, responseMessage)
-        {
+[Route("api/v1/person")]
+public class PersonController : DongNguyenController<PersonResource, CreatePersonResource, UpdatePersonResource, Person>
+{
+    #region Property
+    private readonly IPersonService _personService;
+    private readonly IImageService _imageService;
+    #endregion
+
+    #region Constructor
+    public PersonController(IPersonService personService,
+        IImageService imageService,
+        IMapper mapper,
+        IOptionsMonitor<ResponseMessage> responseMessage) : base(personService, mapper, responseMessage)
+    {
             this._personService = personService;
             this._imageService = imageService;
         }
-        #endregion
+    #endregion
 
-        #region Action
-        [HttpPut("image/{id:int}")]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
-        [ProducesResponseType(typeof(BaseResponse<>), 200)]
-        [ProducesResponseType(typeof(BaseResponse<>), 400)]
-        public async Task<IActionResult> SaveImageAsync(int id, [FromForm] IFormFile image)
-        {
+    #region Action
+    [HttpPut("image/{id:int}")]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
+    [ProducesResponseType(typeof(BaseResponse<>), 200)]
+    [ProducesResponseType(typeof(BaseResponse<>), 400)]
+    public async Task<IActionResult> SaveImageAsync(int id, IFormFile image)
+    {
             Log.Information($"{User.Identity?.Name}: save image a person with Id is {id}.");
 
             var filePath = Path.GetTempFileName();
@@ -59,13 +59,13 @@ namespace API.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetPaginationAsync([FromQuery] int page, [FromQuery] int pageSize)
-        {
+    [HttpGet]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetPaginationAsync([FromQuery] int page, [FromQuery] int pageSize)
+    {
             Log.Information($"{User.Identity?.Name}: get pagination person.");
 
             QueryResource pagintation = new QueryResource(page, pageSize);
@@ -81,13 +81,13 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("pagination")]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetPaginationWithFilterAsync([FromQuery] int page, [FromQuery] int pageSize, [FromBody] FilterPersonResource filterResource)
-        {
+    [HttpPost("pagination")]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetPaginationWithFilterAsync([FromQuery] int page, [FromQuery] int pageSize, [FromBody] FilterPersonResource filterResource)
+    {
             Log.Information($"{User.Identity?.Name}: get pagination person.");
 
             QueryResource pagintation = new QueryResource(page, pageSize);
@@ -103,13 +103,13 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("pagination-salary")]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorKT}")]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetPaginationWithFilterAsync([FromQuery] int page, [FromQuery] int pageSize, [FromBody] FilterPersonSalaryResource filterResource)
-        {
+    [HttpPost("pagination-salary")]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorKT}")]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<PersonResource>>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetPaginationWithFilterAsync([FromQuery] int page, [FromQuery] int pageSize, [FromBody] FilterPersonSalaryResource filterResource)
+    {
             Log.Information($"{User.Identity?.Name}: get pagination-salary person.");
 
             QueryResource pagintation = new QueryResource(page, pageSize);
@@ -125,24 +125,24 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id:int}")]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
-        public new async Task<IActionResult> GetByIdAsync(int id)
-        {
+    [HttpGet("{id:int}")]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
+    public new async Task<IActionResult> GetByIdAsync(int id)
+    {
             Log.Information($"{User.Identity?.Name}: get a person with Id is {id}.");
 
             return await base.GetByIdAsync(id);
         }
 
-        [HttpPost]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}")]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
-        public new async Task<IActionResult> CreateAsync([FromBody] CreatePersonResource resource)
-        {
+    [HttpPost]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}")]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
+    public new async Task<IActionResult> CreateAsync([FromBody] CreatePersonResource resource)
+    {
             Log.Information($"{User.Identity?.Name}: create a person.");
 
             resource.CreatedBy = User.Identity?.Name;
@@ -155,23 +155,23 @@ namespace API.Controllers
             return StatusCode(201, insertResult);
         }
 
-        [HttpPut("{id:int}")]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
-        public new async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdatePersonResource resource)
-        {
+    [HttpPut("{id:int}")]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
+    public new async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdatePersonResource resource)
+    {
             Log.Information($"{User.Identity?.Name}: update a person with Id is {id}.");
 
             return await base.UpdateAsync(id, resource);
         }
 
-        [HttpPut("reset-avatar/{id:int}")]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}, {Role.Viewer}")]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ResetAvatarAsync(int id)
-        {
+    [HttpPut("reset-avatar/{id:int}")]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}, {Role.Viewer}")]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ResetAvatarAsync(int id)
+    {
             Log.Information($"{User.Identity?.Name}: reset avatar of the person with Id is {id}.");
 
             var result = await _imageService.ResetPersonAvatarAsync(id);
@@ -182,16 +182,15 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id:int}")]
-        [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
-        public new async Task<IActionResult> DeleteAsync(int id)
-        {
+    [HttpDelete("{id:int}")]
+    [Authorize(Roles = $"{Role.Admin}, {Role.EditorQTNS}, {Role.EditorQTDA}")]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<PersonResource>), StatusCodes.Status400BadRequest)]
+    public new async Task<IActionResult> DeleteAsync(int id)
+    {
             Log.Information($"{User.Identity?.Name}: delete a person with Id is {id}.");
 
             return await base.DeleteAsync(id);
         }
-        #endregion
-    }
+    #endregion
 }

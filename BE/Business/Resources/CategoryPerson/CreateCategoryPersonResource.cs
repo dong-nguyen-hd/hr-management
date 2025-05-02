@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.CategoryPerson
+namespace Business.Resources.CategoryPerson;
+
+public class CreateCategoryPersonResource
 {
-    public class CreateCategoryPersonResource
-    {
-        [Required]
-        [Display(Name = "Person Id")]
-        public int PersonId { get; set; }
+    [Required]
+    [Display(Name = "Person Id")]
+    public int PersonId { get; set; }
 
-        [Required]
-        [Display(Name = "Category Id")]
-        public int CategoryId { get; set; }
+    [Required]
+    [Display(Name = "Category Id")]
+    public int CategoryId { get; set; }
 
-        [Required]
-        [MaxLength(50)]
-        public List<int> Technologies { get; set; }
-    }
+    [Required]
+    [MaxLength(50)]
+    public List<int> Technologies { get; set; }
 }

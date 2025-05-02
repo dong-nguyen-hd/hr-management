@@ -1,7 +1,6 @@
-﻿namespace Business.Domain.Repositories
+﻿namespace Business.Domain.Repositories;
+
+public interface IUnitOfWork : IDisposable
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        Task CompleteAsync();
-    }
+    Task CompleteAsync();
 }

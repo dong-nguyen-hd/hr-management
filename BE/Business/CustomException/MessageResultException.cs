@@ -1,21 +1,20 @@
-﻿namespace Business.CustomException
+﻿namespace Business.CustomException;
+
+public class MessageResultException : Exception
 {
-    public class MessageResultException : Exception
+    #region Constructor
+    public MessageResultException()
     {
-        #region Constructor
-        public MessageResultException()
-        {
         }
 
-        public MessageResultException(string message)
-            : base(message)
-        {
+    public MessageResultException(string message)
+        : base(message)
+    {
         }
 
-        public MessageResultException(string message, Exception inner)
-            : base(message, inner)
-        {
+    public MessageResultException(string message, Exception inner)
+        : base(message, inner)
+    {
         }
-        #endregion
-    }
+    #endregion
 }

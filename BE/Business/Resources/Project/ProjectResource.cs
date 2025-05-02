@@ -3,50 +3,49 @@ using Business.Resources.Technology;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.Project
+namespace Business.Resources.Project;
+
+public class ProjectResource
 {
-    public class ProjectResource
-    {
-        [Required]
-        public int Id { get; set; }
+    [Required]
+    public int Id { get; set; }
 
-        [Required]
-        [MaxLength(250)]
-        public string Name { get; set; }
+    [Required]
+    [MaxLength(250)]
+    public string Name { get; set; }
 
-        [Required]
-        [MaxLength(250)]
-        public string Description { get; set; }
+    [Required]
+    [MaxLength(250)]
+    public string Description { get; set; }
 
-        [Required]
-        [MaxLength(250)]
-        public string Position { get; set; }
+    [Required]
+    [MaxLength(250)]
+    public string Position { get; set; }
 
-        [Required]
-        [MaxLength(250)]
-        public string Responsibilities { get; set; }
+    [Required]
+    [MaxLength(250)]
+    public string Responsibilities { get; set; }
 
-        [Required]
-        [Display(Name = "Team Size")]
-        public int TeamSize { get; set; }
+    [Required]
+    [Display(Name = "Team Size")]
+    public int TeamSize { get; set; }
 
-        [Required]
-        [JsonConverter(typeof(DateTimeConverter))]
-        [Display(Name = "Start Date")]
-        public DateTime StartDate { get; set; }
+    [Required]
+    [JsonConverter(typeof(DateTimeConverter))]
+    [Display(Name = "Start Date")]
+    public DateTime StartDate { get; set; }
 
-        [JsonConverter(typeof(DateTimeConverter))]
-        [Display(Name = "End Date")]
-        public DateTime? EndDate { get; set; }
+    [JsonConverter(typeof(DateTimeConverter))]
+    [Display(Name = "End Date")]
+    public DateTime? EndDate { get; set; }
 
-        [Required]
-        [Display(Name = "Order Index")]
-        public int OrderIndex { get; set; }
+    [Required]
+    [Display(Name = "Order Index")]
+    public int OrderIndex { get; set; }
 
-        [Required]
-        public List<TechnologyResource> Technologies { get; set; }
+    [Required]
+    public List<TechnologyResource> Technologies { get; set; }
 
-        [Required]
-        public int GroupId { get; set; }
-    }
+    [Required]
+    public int GroupId { get; set; }
 }

@@ -7,12 +7,12 @@ using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
-namespace API.Extensions
+namespace API.Extensions;
+
+public static class AddServices
 {
-    public static class AddServices
+    public static void AddDependencyInjection(this IServiceCollection services)
     {
-        public static void AddDependencyInjection(this IServiceCollection services)
-        {
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IPersonService, PersonService>();
 
@@ -66,8 +66,8 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(ModelToResourceProfile));
         }
 
-        public static void AddCustomizeSwagger(this IServiceCollection services)
-        {
+    public static void AddCustomizeSwagger(this IServiceCollection services)
+    {
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Human Resource Management for IT Company", Version = "v1.0" });
@@ -95,8 +95,8 @@ namespace API.Extensions
             });
         }
 
-        public static void AddCronJob<T>(this IServiceCollection services, Action<IScheduleConfig<T>> options) where T : CronJobService
-        {
+    public static void AddCronJob<T>(this IServiceCollection services, Action<IScheduleConfig<T>> options) where T : CronJobService
+    {
             if (options == null)
                 throw new ArgumentNullException(nameof(options), "Please provide Schedule Configurations.");
 
@@ -109,5 +109,4 @@ namespace API.Extensions
             services.AddSingleton<IScheduleConfig<T>>(config);
             services.AddHostedService<T>();
         }
-    }
 }

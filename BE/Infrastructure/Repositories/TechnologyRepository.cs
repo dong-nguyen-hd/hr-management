@@ -3,17 +3,17 @@ using Business.Domain.Repositories;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
-{
-    public class TechnologyRepository : BaseRepository<Technology>, ITechnologyRepository
-    {
-        #region Constructor
-        public TechnologyRepository(AppDbContext context) : base(context) { }
-        #endregion
+namespace Infrastructure.Repositories;
 
-        #region Method
-        public async Task<IEnumerable<Technology>> FindByNameAsync(string filterName)
-        {
+public class TechnologyRepository : BaseRepository<Technology>, ITechnologyRepository
+{
+    #region Constructor
+    public TechnologyRepository(AppDbContext context) : base(context) { }
+    #endregion
+
+    #region Method
+    public async Task<IEnumerable<Technology>> FindByNameAsync(string filterName)
+    {
             var queryable = Context.Technologies.AsQueryable();
 
             if (!string.IsNullOrEmpty(filterName))
@@ -21,6 +21,5 @@ namespace Infrastructure.Repositories
 
             return await queryable.AsNoTracking().OrderBy(x => x.Name).Take(5).ToListAsync();
         }
-        #endregion
-    }
+    #endregion
 }

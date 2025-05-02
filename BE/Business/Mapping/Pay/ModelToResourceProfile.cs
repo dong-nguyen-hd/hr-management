@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Business.Resources.Pay;
 
-namespace Business.Mapping.Pay
+namespace Business.Mapping.Pay;
+
+public class ModelToResourceProfile : Profile
 {
-    public class ModelToResourceProfile : Profile
+    public ModelToResourceProfile()
     {
-        public ModelToResourceProfile()
-        {
             CreateMap<Domain.Models.Pay, PayResource>()
                 .ForMember(x => x.SocialInsurancePercent, opt => opt.MapFrom(src => src.SocialInsurance))
                 .ForMember(x => x.SocialInsurance, opt => opt.MapFrom(src => CalculateSocialInsurance(src)))
@@ -18,9 +18,9 @@ namespace Business.Mapping.Pay
                 .ForMember(x => x.NET, opt => opt.MapFrom(src => CalculateNET(src)));
         }
 
-        #region Private work
-        private static decimal CalculateSocialInsurance(Domain.Models.Pay src)
-        {
+    #region Private work
+    private static decimal CalculateSocialInsurance(Domain.Models.Pay src)
+    {
             decimal grossWithoutBonus = (decimal)src.WorkDay * src.BaseSalary / (decimal)src.TotalWorkDay;
 
             decimal socialInsurance = grossWithoutBonus / 100 * (decimal)src.SocialInsurance;
@@ -28,8 +28,8 @@ namespace Business.Mapping.Pay
             return Math.Round(socialInsurance, 3);
         }
 
-        private static decimal CalculatePIT(Domain.Models.Pay src)
-        {
+    private static decimal CalculatePIT(Domain.Models.Pay src)
+    {
             decimal grossWithoutBonus = (decimal)src.WorkDay * src.BaseSalary / (decimal)src.TotalWorkDay;
 
             decimal pit = grossWithoutBonus / 100 * (decimal)src.PIT;
@@ -37,8 +37,8 @@ namespace Business.Mapping.Pay
             return Math.Round(pit, 3);
         }
 
-        private static decimal CalculateHealthInsurance(Domain.Models.Pay src)
-        {
+    private static decimal CalculateHealthInsurance(Domain.Models.Pay src)
+    {
             decimal grossWithoutBonus = (decimal)src.WorkDay * src.BaseSalary / (decimal)src.TotalWorkDay;
 
             decimal healthInsurance = grossWithoutBonus / 100 * (decimal)src.HealthInsurance;
@@ -46,8 +46,8 @@ namespace Business.Mapping.Pay
             return Math.Round(healthInsurance, 3);
         }
 
-        private static decimal CalculateGross(Domain.Models.Pay src)
-        {
+    private static decimal CalculateGross(Domain.Models.Pay src)
+    {
             decimal grossWithoutBonus = (decimal)src.WorkDay * src.BaseSalary / (decimal)src.TotalWorkDay;
 
             decimal gross = grossWithoutBonus + src.Bonus + src.Allowance;
@@ -55,8 +55,8 @@ namespace Business.Mapping.Pay
             return Math.Round(gross, 3);
         }
 
-        private static decimal CalculateNET(Domain.Models.Pay src)
-        {
+    private static decimal CalculateNET(Domain.Models.Pay src)
+    {
             decimal grossWithoutBonus = (decimal)src.WorkDay * src.BaseSalary / (decimal)src.TotalWorkDay;
 
             decimal baseNet = (decimal)((src.PIT + src.SocialInsurance + src.HealthInsurance) / 100) * grossWithoutBonus;
@@ -64,6 +64,5 @@ namespace Business.Mapping.Pay
 
             return Math.Round(net, 3);
         }
-        #endregion
-    }
+    #endregion
 }

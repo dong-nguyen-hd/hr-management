@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace API.Extensions
+namespace API.Extensions;
+
+public static class CustomizeAuthentication
 {
-    public static class CustomizeAuthentication
+    #region Method
+    public static void AddJwtBearerAuthentication(this IServiceCollection services)
     {
-        #region Method
-        public static void AddJwtBearerAuthentication(this IServiceCollection services)
-        {
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -31,6 +31,5 @@ namespace API.Extensions
                 };
             });
         }
-        #endregion
-    }
+    #endregion
 }

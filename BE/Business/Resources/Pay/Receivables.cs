@@ -1,16 +1,16 @@
-﻿namespace Business.Resources.Pay
-{
-    public class Receivables
-    {
-        #region Property
-        public float PIT { get; } // Personal income tax
-        public float SocialInsurance { get; } = 5; // unit %
-        public float HealthInsurance { get; } = 1; // unit %
-        #endregion
+﻿namespace Business.Resources.Pay;
 
-        #region Constructor
-        public Receivables(decimal gross)
-        {
+public class Receivables
+{
+    #region Property
+    public float PIT { get; } // Personal income tax
+    public float SocialInsurance { get; } = 5; // unit %
+    public float HealthInsurance { get; } = 1; // unit %
+    #endregion
+
+    #region Constructor
+    public Receivables(decimal gross)
+    {
             if (0 < gross && gross <= 5_000_000m)
                 this.PIT = 5f;
             if (5_000_000m < gross && gross <= 10_000_000m)
@@ -26,6 +26,5 @@
             if (gross > 80_000_000m)
                 this.PIT = 35f;
         }
-        #endregion
-    }
+    #endregion
 }

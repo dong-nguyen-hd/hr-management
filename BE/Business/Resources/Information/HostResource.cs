@@ -1,11 +1,10 @@
-﻿namespace Business.Resources.Information
+﻿namespace Business.Resources.Information;
+
+public sealed class HostResource
 {
-    public sealed class HostResource
-    {
-        #region Property
-        public string OriginalImagePath { get; set; }
-        public string ThumbnailImagePath { get; set; }
-        public string TimesheetPath { get; set; }
-        #endregion
-    }
+    #region Property
+    public string OriginalImagePath { get; set; }
+    public string ThumbnailImagePath { get; set; }
+    public string TimesheetPath { get; set; }
+    #endregion
 }

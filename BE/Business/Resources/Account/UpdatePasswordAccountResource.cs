@@ -1,16 +1,15 @@
 ﻿using Business.Extensions.Validation;
 using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.Account
-{
-    public class UpdatePasswordAccountResource
-    {
-        [Required]
-        [Password]
-        public string OldPassword { get; set; }
+namespace Business.Resources.Account;
 
-        [Required]
-        [Password]
-        public string NewPassword { get; set; }
-    }
+public class UpdatePasswordAccountResource
+{
+    [Required]
+    [Password]
+    public string OldPassword { get; set; }
+
+    [Required]
+    [Password]
+    public string NewPassword { get; set; }
 }

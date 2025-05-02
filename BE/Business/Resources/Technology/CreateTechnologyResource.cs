@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Resources.Technology
-{
-    public class CreateTechnologyResource
-    {
-        [Required]
-        [MaxLength(250)]
-        [MinLength(1)]
-        public string Name { get; set; }
+namespace Business.Resources.Technology;
 
-        [Required]
-        [Display(Name = "Category Id")]
-        public int CategoryId { get; set; }
-    }
+public class CreateTechnologyResource
+{
+    [Required]
+    [MaxLength(250)]
+    [MinLength(1)]
+    public string Name { get; set; }
+
+    [Required]
+    [Display(Name = "Category Id")]
+    public int CategoryId { get; set; }
 }

@@ -1,12 +1,12 @@
 ﻿using Business.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace Business.Extensions.Validation
+namespace Business.Extensions.Validation;
+
+public class ComponentOrderAttribute : ValidationAttribute
 {
-    public class ComponentOrderAttribute : ValidationAttribute
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
             try
             {
                 List<int> tempList = value as List<int>;
@@ -24,5 +24,4 @@ namespace Business.Extensions.Validation
 
             bool ValidateElement(int temp) => Enum.IsDefined(typeof(eOrder), temp);
         }
-    }
 }

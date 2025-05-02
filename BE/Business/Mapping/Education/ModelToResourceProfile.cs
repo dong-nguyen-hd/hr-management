@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using Business.Resources.Education;
 
-namespace Business.Mapping.Education
+namespace Business.Mapping.Education;
+
+public class ModelToResourceProfile : Profile
 {
-    public class ModelToResourceProfile : Profile
+    public ModelToResourceProfile()
     {
-        public ModelToResourceProfile()
-        {
             CreateMap<Domain.Models.Education, EducationResource>();
         }
-    }
 }

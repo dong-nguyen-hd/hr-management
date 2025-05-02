@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Extensions.Validation
+namespace Business.Extensions.Validation;
+
+/// <summary>
+/// Provisions of Article 3 of the 2012 Vietnam Labor Code
+/// </summary>
+public class DoBAttribute : ValidationAttribute
 {
-    /// <summary>
-    /// Provisions of Article 3 of the 2012 Vietnam Labor Code
-    /// </summary>
-    public class DoBAttribute : ValidationAttribute
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
             try
             {
                 DateTime date = Convert.ToDateTime(value);
@@ -25,5 +25,4 @@ namespace Business.Extensions.Validation
                 return new ValidationResult("Invalid Date of Birth");
             }
         }
-    }
 }

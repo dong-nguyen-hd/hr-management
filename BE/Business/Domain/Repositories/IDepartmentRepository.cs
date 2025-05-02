@@ -1,9 +1,8 @@
 ﻿using Business.Domain.Models;
 
-namespace Business.Domain.Repositories
+namespace Business.Domain.Repositories;
+
+public interface IDepartmentRepository : IBaseRepository<Department>
 {
-    public interface IDepartmentRepository : IBaseRepository<Department>
-    {
-        public Task<List<Department>> FindByNameAsync(string filterName, bool absolute = false);
-    }
+    public Task<List<Department>> FindByNameAsync(string filterName, bool absolute = false);
 }

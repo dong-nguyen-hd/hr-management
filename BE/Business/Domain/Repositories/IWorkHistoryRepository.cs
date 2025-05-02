@@ -1,8 +1,7 @@
 ﻿using Business.Domain.Models;
 
-namespace Business.Domain.Repositories
+namespace Business.Domain.Repositories;
+
+public interface IWorkHistoryRepository : IBaseRepository<WorkHistory>
 {
-    public interface IWorkHistoryRepository : IBaseRepository<WorkHistory>
-    {
-    }
 }

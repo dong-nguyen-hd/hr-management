@@ -1,12 +1,12 @@
 ﻿using Business.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace Business.Extensions.Validation
+namespace Business.Extensions.Validation;
+
+public class RoleAttribute : ValidationAttribute
 {
-    public class RoleAttribute : ValidationAttribute
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
             try
             {
                 if(value is null)
@@ -22,5 +22,4 @@ namespace Business.Extensions.Validation
                 return new ValidationResult("Invalid Role field.");
             }
         }
-    }
 }

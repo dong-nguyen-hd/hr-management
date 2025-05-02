@@ -1,19 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Extensions.Validation
-{
-    public class StartDateAttribute : ValidationAttribute
-    {
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+namespace Business.Extensions.Validation;
 
-        private readonly string _tempEndDate;
-        public StartDateAttribute(string endDate)
-        {
+public class StartDateAttribute : ValidationAttribute
+{
+    public DateTime StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+
+    private readonly string _tempEndDate;
+    public StartDateAttribute(string endDate)
+    {
             _tempEndDate = endDate;
         }
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
             try
             {
                 StartDate = Convert.ToDateTime(value);
@@ -42,8 +42,8 @@ namespace Business.Extensions.Validation
             }
         }
 
-        protected DateTime? GetValueEndDate(ValidationContext validationContext)
-        {
+    protected DateTime? GetValueEndDate(ValidationContext validationContext)
+    {
             try
             {
                 var propertyInfo = validationContext.ObjectType.GetProperty(_tempEndDate);
@@ -61,5 +61,4 @@ namespace Business.Extensions.Validation
                 return null;
             }
         }
-    }
 }

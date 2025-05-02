@@ -4,15 +4,15 @@ using Business.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Contexts.Config
+namespace Infrastructure.Contexts.Config;
+
+/// <summary>
+/// Setting schema for Account table
+/// </summary>
+public class AccountConfig : IEntityTypeConfiguration<Account>
 {
-    /// <summary>
-    /// Setting schema for Account table
-    /// </summary>
-    public class AccountConfig : IEntityTypeConfiguration<Account>
+    public void Configure(EntityTypeBuilder<Account> entity)
     {
-        public void Configure(EntityTypeBuilder<Account> entity)
-        {
             entity.ToTable("Account");
             entity.Property(x => x.UserName).IsRequired().HasColumnType("varchar(125)");
             entity.Property(x => x.Password).IsRequired().HasColumnType("varchar(125)");
@@ -41,5 +41,4 @@ namespace Infrastructure.Contexts.Config
                 }
             );
         }
-    }
 }

@@ -6,22 +6,22 @@ using Business.Resources.Category;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
-{
-    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
-    {
-        #region Constructor
-        public CategoryRepository(AppDbContext context) : base(context) { }
-        #endregion
+namespace Infrastructure.Repositories;
 
-        #region Method
-        public override async Task<Category> GetByIdAsync(int id) =>
-            await Context.Categories.Where(x => x.Id.Equals(id))
+public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
+{
+    #region Constructor
+    public CategoryRepository(AppDbContext context) : base(context) { }
+    #endregion
+
+    #region Method
+    public override async Task<Category> GetByIdAsync(int id) =>
+        await Context.Categories.Where(x => x.Id.Equals(id))
             .Include(x => x.Technologies)
             .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Category>> FindByNameAsync(string filterName, bool absolute = false)
-        {
+    public async Task<IEnumerable<Category>> FindByNameAsync(string filterName, bool absolute = false)
+    {
             var queryable = Context.Categories.AsQueryable();
 
             if (!string.IsNullOrEmpty(filterName) && !absolute)
@@ -39,8 +39,8 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<(IEnumerable<Category> records, int total)> GetPaginationAsync(QueryResource pagination, FilterCategoryResource filterResource)
-        {
+    public async Task<(IEnumerable<Category> records, int total)> GetPaginationAsync(QueryResource pagination, FilterCategoryResource filterResource)
+    {
             var queryable = ConditionFilter(filterResource);
 
             var total = await queryable.CountAsync();
@@ -56,8 +56,8 @@ namespace Infrastructure.Repositories
             return (records, total);
         }
 
-        private IQueryable<Category> ConditionFilter(FilterCategoryResource filterResource)
-        {
+    private IQueryable<Category> ConditionFilter(FilterCategoryResource filterResource)
+    {
             var queryable = Context.Categories.AsQueryable();
 
             if (filterResource != null)
@@ -77,6 +77,5 @@ namespace Infrastructure.Repositories
 
             return queryable;
         }
-        #endregion
-    }
+    #endregion
 }

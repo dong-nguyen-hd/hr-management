@@ -1,9 +1,8 @@
-﻿namespace Business.Data
+﻿namespace Business.Data;
+
+public enum eGender : byte
 {
-    public enum eGender : byte
-    {
-        Male = 1,
-        Female,
-        Sexless
-    }
+    Male = 1,
+    Female,
+    Sexless
 }

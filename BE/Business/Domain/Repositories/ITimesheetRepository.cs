@@ -1,12 +1,11 @@
 ﻿using Business.Domain.Models;
 using Business.Resources.Timesheet;
 
-namespace Business.Domain.Repositories
-{
-    public interface ITimesheetRepository : IBaseRepository<Timesheet>
-    {
-        Task<Timesheet> GetTimesheetByPersonIdAsync(int personId, DateTime date);
+namespace Business.Domain.Repositories;
 
-        Task<WorkDayResource> GetTotalWorkDayAsync(int personId, DateTime date);
-    }
+public interface ITimesheetRepository : IBaseRepository<Timesheet>
+{
+    Task<Timesheet> GetTimesheetByPersonIdAsync(int personId, DateTime date);
+
+    Task<WorkDayResource> GetTotalWorkDayAsync(int personId, DateTime date);
 }
