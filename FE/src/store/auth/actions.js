@@ -1,9 +1,9 @@
 import { api } from "src/boot/axios";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const validateToken = async ({ dispatch, getters }) => {
   let token = getters.getToken.accessToken;
-  let { exp } = jwt_decode(token);
+  let { exp } = jwtDecode(token);
   let timeUntilRefresh = exp - Date.now() / 1000;
 
   let result = false;

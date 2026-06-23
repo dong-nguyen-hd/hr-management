@@ -1,11 +1,11 @@
-﻿# Web API Project:<p/>Human Resource Management for IT Company
+# Web API Project:<p/>Human Resource Management for IT Company
 
-This project building on **.NET 7**, using for Human Resource Management for IT Company.
+This project building on **.NET 10**, using for Human Resource Management for IT Company.
 
 ## Technologies
 
-* [ASP.NET Core API 7](https://learn.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-7.0)
-* [Entity Framework Core 7](https://docs.microsoft.com/en-us/ef/core/)
+* [ASP.NET Core API 10](https://learn.microsoft.com/en-us/aspnet/core/)
+* [Entity Framework Core 10](https://docs.microsoft.com/en-us/ef/core/)
 * [Cronos](https://github.com/HangfireIO/Cronos)
 * [Serilog](https://serilog.net/)
 * [EPPlus](https://github.com/EPPlusSoftware/EPPlus)
@@ -41,7 +41,7 @@ This project building on **.NET 7**, using for Human Resource Management for IT 
 * Following CLI:
 
 **Note:** you must directive to root project before run CLI.
-1. Install [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download)
+1. Install [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download)
 2. Install [MS SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 3. Editing connection string in **appsettings.json**
 4. Run `cd ./Infrastructure`.

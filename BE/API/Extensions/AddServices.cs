@@ -1,4 +1,5 @@
-﻿using Business.Domain.Repositories;
+using AutoMapper;
+using Business.Domain.Repositories;
 using Business.Domain.Services;
 using Business.Mapping.Account;
 using Business.Resources;
@@ -63,7 +64,7 @@ public static class AddServices
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddAutoMapper(typeof(ModelToResourceProfile));
+            services.AddAutoMapper(cfg => {}, typeof(ModelToResourceProfile));
         }
 
     public static void AddCustomizeSwagger(this IServiceCollection services)
